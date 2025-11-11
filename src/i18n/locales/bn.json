@@ -1,0 +1,159 @@
+{
+  "language": {
+    "select": {
+      "title": "আপনার পছন্দের ভাষা চয়ন করুন",
+      "subtitle": "চালিয়ে যেতে একটি ভাষা নির্বাচন করুন"
+    },
+    "hindi": "হিন্দি",
+    "hindiSubtitle": "हिन्दीमें नि आपका स्वागत है",
+    "bangla": "বাংলা",
+    "banglaSubtitle": "বাংলাভাষায় স্বাগতম",
+    "marathi": "মারাঠি",
+    "marathiSubtitle": "मराठीमध्ये तुमचे स्वागत आहे",
+    "gujarati": "গুজরাটি",
+    "gujaratiSubtitle": "ગુજરાતીમાં આપનું સ્વાગત છે",
+    "tamil": "তামিল",
+    "tamilSubtitle": "தமிழில் வரவேற்கிறோம்",
+    "telugu": "তেলুগু",
+    "teluguSubtitle": "తెలుగులోవ స్వాగతం",
+    "malayalam": "মালায়ালাম",
+    "malayalamSubtitle": "മലയാളത്തിൽ സ્વാഗതം",
+    "punjabi": "পাঞ্জাবি",
+    "punjabiSubtitle": "ਪੰਜਾਬੀ ਵਿਚ ਜੀ ਆਇਆਂ ਨੂੰ",
+    "odia": "ওড়িয়া",
+    "odiaSubtitle": "ଓଡ଼ିଆରେ ସ୍ୱାଗତ",
+    "english": "ইংরেজি",
+    "englishSubtitle": "Welcome to Krushiseva"
+  },
+  "button": {
+    "continue": "চালিয়ে যান",
+    "login": "লগইন",
+    "signup": "সাইন আপ",
+    "submit": "জমা দিন",
+    "cancel": "বাতিল",
+    "save": "সংরক্ষণ"
+  },
+  "role": {
+    "select": {
+      "title": "আপনার ভূমিকা চয়ন করুন",
+      "subtitle": "আপনাকে সবচেয়ে ভালো বর্ণনা করে এমন ভূমিকা নির্বাচন করুন। এটি আমাদের এগ্রি-থ্রেডে আপনার অভিজ্ঞতা ব্যক্তিগতকরণ করতে সাহায্য করবে।"
+    },
+    "farmer": "কৃষক",
+    "farmerDescription": "চাষ করুন, বৃদ্ধি করুন এবং ক্রেতাদের কাছে সরাসরি আপনার পণ্য বিক্রি করুন এবং সম্প্রদায়ের সাথে সংযুক্ত হন।",
+    "business": "ব্যবসা",
+    "businessDescription": "মানসম্পন্ন পণ্যের উৎস, আপনার নেটওয়ার্ক প্রসারিত করুন এবং আপনার কৃষি ব্যবসা বৃদ্ধি করুন।",
+    "professional": "পেশাদার",
+    "professionalDescription": "দক্ষতা শেয়ার করুন, পরামর্শ সেবা প্রদান করুন এবং কৃষি প্রকল্পে সহযোগিতা করুন।",
+    "government": "সরকারি কর্মকর্তা",
+    "governmentDescription": "স্টেকহোল্ডারদের সাথে সংযুক্ত হন, নীতি পরিচালনা করুন এবং কৃষি উন্নয়নে সহায়তা করুন।"
+  },
+  "auth": {
+    "login": {
+      "title": "এগ্রিথ্রেড",
+      "subtitle": "ফিরে আসার স্বাগতম!",
+      "button": "লগইন",
+      "footer": "এখানে নতুন? অ্যাকাউন্ট তৈরি করুন"
+    },
+    "signup": {
+      "subtitle": "আপনার অ্যাকাউন্ট তৈরি করুন",
+      "button": "সাইন আপ",
+      "footer": "ইতিমধ্যে একটি অ্যাকাউন্ট আছে? লগইন"
+    },
+     "otp": {
+        "title": "OTP যাচাইকরণ",
+        "subtitle": "আপনার ইমেইল/মোবাইলে পাঠানো ৬-অঙ্কের OTP লিখুন",
+        "emailMobileLabel": "ইমেইল বা মোবাইল নম্বর",
+        "emailMobilePlaceholder": "আপনার ইমেইল বা মোবাইল নম্বর লিখুন",
+        "enterOtp": "OTP লিখুন",
+        "otpPlaceholder": "৬-অঙ্কের OTP লিখুন",
+        "instructions": "আপনার ইমেইল/মোবাইলে পাঠানো ৬-অঙ্কের কোডটি লিখুন",
+        "verifyContinue": "যাচাই করুন এবং চালিয়ে যান",
+        "verifying": "যাচাই করা হচ্ছে...",
+        "sentTo": "OTP পাঠানো হয়েছে",
+        "didNotReceive": "OTP পাননি?",
+        "resend": "পুনরায় পাঠান",
+        "resendIn": "পুনরায় পাঠান",
+        "back": "পিছনে যান",
+        "newHere": "এখানে নতুন?",
+        "createAccount": "অ্যাকাউন্ট তৈরি করুন",
+        "invalidLength": "দয়া করে একটি বৈধ ৬-অঙ্কের OTP লিখুন",
+        "verificationError": "OTP যাচাই করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।",
+        "resendError": "OTP পুনরায় পাঠাতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।",
+        "enterEmailMobile": "দয়া করে ইমেইল বা মোবাইল নম্বর লিখুন",
+        "enterEmailMobileFirst": "দয়া করে প্রথমে ইমেইল বা মোবাইল নম্বর লিখুন"
+      },
+    "email": {
+      "label": "ইমেইল / মোবাইল",
+      "placeholder": "ইমেইল বা মোবাইল নম্বর লিখুন"
+    },
+    "password": {
+      "label": "পাসওয়ার্ড",
+      "placeholder": "আপনার পাসওয়ার্ড লিখুন"
+    },
+    "fullname": {
+      "label": "পুরো নাম",
+      "placeholder": "আপনার পুরো নাম লিখুন"
+    },
+    "remember": "আমাকে মনে রাখুন",
+    "forgot": "পাসওয়ার্ড ভুলে গেছেন?",
+    "confirmPassword": {
+      "label": "পাসওয়ার্ড নিশ্চিত করুন",
+      "placeholder": "আপনার পাসওয়ার্ড নিশ্চিত করুন"
+    }
+  },
+  "dashboard": {
+    "title": "এগ্রিথ্রেড",
+    "shareThoughts": "আপনার চিন্তাভাবনা শেয়ার করুন...",
+    "filters": "ফিল্টার",
+    "categories": "বিভাগ",
+    "allPosts": "সব পোস্ট",
+    "farming": "কৃষিকাজ",
+    "business": "ব্যবসা",
+    "research": "গবেষণা",
+    "regions": "অঞ্চল",
+    "allRegions": "সব অঞ্চল",
+    "north": "উত্তর",
+    "south": "দক্ষিণ",
+    "east": "পূর্ব",
+    "west": "পশ্চিম",
+    "trending": "ট্রেন্ডিং বিষয়",
+    "yourProfile": "আপনার প্রোফাইল",
+    "follow": "ফলো করুন",
+    "profileCompletion": "প্রোফাইল সম্পূর্ণতা",
+    "writtenBriefs": "লিখিত সংক্ষিপ্ত বিবরণ",
+    "profileViews": "প্রোফাইল ভিউ",
+    "connections": "সংযোগ",
+    "completeProfile": "প্রোফাইল সম্পূর্ণ করুন",
+    "upcomingEvents": "আসন্ন ইভেন্ট",
+    "organicFarming": "জৈব কৃষি",
+    "agriTechExpo": "এগ্রিটেক এক্সপো ২০২৫",
+    "partner": "অংশীদার",
+    "professor": "অধ্যাপক",
+    "architect": "স্থপতি",
+    "network": "নেটওয়ার্ক",
+    "messages": "বার্তা"
+  },
+  "nav": {
+    "search": "খুঁজুন",
+    "notifications": "বিজ্ঞপ্তি",
+    "theme": "থিম",
+    "language": "ভাষা"
+  },
+  "welcome": {
+    "title": "এগ্রি-থ্রেডে স্বাগতম",
+    "subtitle": "কৃষিতে কৃষক, ব্যবসা এবং পেশাদারদের সংযুক্ত করা"
+  },
+  "validation": {
+    "required": "এই ক্ষেত্রটি প্রয়োজন",
+    "email": "একটি বৈধ ইমেইল লিখুন",
+    "passwordLength": "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে",
+    "passwordMatch": "পাসওয়ার্ড মেলে না"
+  },
+  "common": {
+    "loading": "লোড হচ্ছে...",
+    "error": "একটি ত্রুটি ঘটেছে",
+    "success": "সাফল্য",
+    "warning": "সতর্কতা",
+    "info": "তথ্য"
+  }
+}

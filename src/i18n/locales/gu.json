@@ -1,0 +1,159 @@
+{
+  "language": {
+    "select": {
+      "title": "તમારી પસંદગીની ભાષા પસંદ કરો",
+      "subtitle": "ચાલુ રાખવા માટે ભાષા પસંદ કરો"
+    },
+    "hindi": "હિન્દી",
+    "hindiSubtitle": "हिन्दीमें नि आपका स्वागत है",
+    "bangla": "બંગાળી",
+    "banglaSubtitle": "বাংলাভাষায় স্বাগতম",
+    "marathi": "મરાઠી",
+    "marathiSubtitle": "मराठीमध्ये तुमचे स्वागत आहे",
+    "gujarati": "ગુજરાતી",
+    "gujaratiSubtitle": "ગુજરાતીમાં આપનું સ્વાગત છે",
+    "tamil": "તમિલ",
+    "tamilSubtitle": "தமிழில் வரவேற்கிறோம்",
+    "telugu": "તેલુગુ",
+    "teluguSubtitle": "తెలుగులోవ స్వાગతం",
+    "malayalam": "મલયાલમ",
+    "malayalamSubtitle": "മലയാളത്തിൽ സ്വാഗતം",
+    "punjabi": "પંજાબી",
+    "punjabiSubtitle": "ਪੰਜਾਬੀ ਵਿਚ ਜੀ ਆਇਆਂ ਨੂੰ",
+    "odia": "ઓડિયા",
+    "odiaSubtitle": "ଓଡ଼ିଆરે સ୍ୱાગ઼ત",
+    "english": "અંગ્રેજી",
+    "englishSubtitle": "Welcome to Krushiseva"
+  },
+  "button": {
+    "continue": "ચાલુ રાખો",
+    "login": "લોગિન",
+    "signup": "સાઇન અપ",
+    "submit": "સબમિટ કરો",
+    "cancel": "રદ કરો",
+    "save": "સેવ કરો"
+  },
+  "role": {
+    "select": {
+      "title": "તમારી ભૂમિકા પસંદ કરો",
+      "subtitle": "તમારું શ્રેષ્ઠ વર્ણન કરતી ભૂમિકા પસંદ કરો. આ અમને એગ્રી-થ્રેડ પર તમારા અનુભવને વ્યક્તિગત બનાવવામાં મદદ કરશે।"
+    },
+    "farmer": "ખેડૂત",
+    "farmerDescription": "ખેતી કરો, વધારો અને તમારી ઉપજ સીધી ખરીદદારોને વેચો અને સમુદાય સાથે જોડાઓ।",
+    "business": "વ્યવસાય",
+    "businessDescription": "ગુણવત્તાયુક્ત ઉત્પાદનોનો સ્રોત, તમારું નેટવર્ક વિસ્તૃત કરો અને તમારો કૃષિ વ્યવસાય વધારો।",
+    "professional": "વ્યાવસાયિક",
+    "professionalDescription": "નિપુણતા શેર કરો, પરામર્શ સેવાઓ પ્રદાન કરો અને કૃષિ પ્રોજેક્ટ્સ પર સહયોગ કરો।",
+    "government": "સરકારી અધિકારી",
+    "governmentDescription": "હિતધારકો સાથે જોડાઓ, નીતિઓનું સંચાલન કરો અને કૃષિ વિકાસને સમર્થન આપો।"
+  },
+  "auth": {
+    "login": {
+      "title": "એગ્રીથ્રેડ",
+      "subtitle": "પાછા આવવાનું સ્વાગત છે!",
+      "button": "લોગિન",
+      "footer": "અહીં નવા છો? ખાતું બનાવો"
+    },
+    "signup": {
+      "subtitle": "તમારું ખાતું બનાવો",
+      "button": "સાઇન અપ",
+      "footer": "પહેલેથી જ ખાતું છે? લોગિન"
+    },
+     "otp": {
+        "title": "OTP ચકાસણી",
+        "subtitle": "તમારા ઈમેલ/મોબાઈલ પર મોકલેલ 6-અંકનો OTP દાખલ કરો",
+        "emailMobileLabel": "ઈમેલ અથવા મોબાઈલ નંબર",
+        "emailMobilePlaceholder": "તમારો ઈમેલ અથવા મોબાઈલ નંબર દાખલ કરો",
+        "enterOtp": "OTP દાખલ કરો",
+        "otpPlaceholder": "6-અંકનો OTP દાખલ કરો",
+        "instructions": "તમારા ઈમેલ/મોબાઈલ પર મોકલેલ 6-અંકનો કોડ દાખલ કરો",
+        "verifyContinue": "ચકાસો અને ચાલુ રાખો",
+        "verifying": "ચકાસાઈ કરી રહ્યું છે...",
+        "sentTo": "OTP મોકલ્યો",
+        "didNotReceive": "OTP પ્રાપ્ત થયો નથી?",
+        "resend": "ફરી મોકલો",
+        "resendIn": "ફરી મોકલો",
+        "back": "પાછા",
+        "newHere": "અહીં નવા છો?",
+        "createAccount": "એકાઉન્ટ બનાવો",
+        "invalidLength": "કૃપા કરીને માન્ય 6-અંકનો OTP દાખલ કરો",
+        "verificationError": "OTP ચકાસણીમાં ભૂલ. કૃપા કરીને ફરી પ્રયત્ન કરો.",
+        "resendError": "OTP ફરી મોકલવામાં ભૂલ. કૃપા કરીને ફરી પ્રયત્ન કરો.",
+        "enterEmailMobile": "કૃપા કરીને ઈમેલ અથવા મોબાઈલ નંબર દાખલ કરો",
+        "enterEmailMobileFirst": "કૃપા કરીને પહેલા ઈમેલ અથવા મોબાઈલ નંબર દાખલ કરો"
+      },
+    "email": {
+      "label": "ઈમેલ / મોબાઈલ",
+      "placeholder": "ઈમેલ અથવા મોબાઈલ નંબર દાખલ કરો"
+    },
+    "password": {
+      "label": "પાસવર્ડ",
+      "placeholder": "તમારો પાસવર્ડ દાખલ કરો"
+    },
+    "fullname": {
+      "label": "પૂરું નામ",
+      "placeholder": "તમારું પૂરું નામ દાખલ કરો"
+    },
+    "remember": "મને યાદ રાખો",
+    "forgot": "પાસવર્ડ ભૂલી ગયા?",
+    "confirmPassword": {
+      "label": "પાસવર્ડની પુષ્ટિ કરો",
+      "placeholder": "તમારા પાસવર્ડની પુષ્ટિ કરો"
+    }
+  },
+ "dashboard": {
+    "title": "એગ્રીથ્રેડ",
+    "shareThoughts": "તમારા વિચારો શેર કરો...",
+    "filters": "ફિલ્ટર્સ",
+    "categories": "શ્રેણીઓ",
+    "allPosts": "બધી પોસ્ટ્સ",
+    "farming": "ખેતી",
+    "business": "વ્યવસાય",
+    "research": "સંશોધન",
+    "regions": "પ્રદેશ",
+    "allRegions": "બધા પ્રદેશો",
+    "north": "ઉત્તર",
+    "south": "દક્ષિણ",
+    "east": "પૂર્વ",
+    "west": "પશ્ચિમ",
+    "trending": "ટ્રેન્ડિંગ ટોપિક્સ",
+    "yourProfile": "તમારી પ્રોફાઇલ",
+    "follow": "ફોલો કરો",
+    "profileCompletion": "પ્રોફાઇલ પૂર્ણતા",
+    "writtenBriefs": "લેખિત સંક્ષિપ્તો",
+    "profileViews": "પ્રોફાઇલ દૃશ્યો",
+    "connections": "કનેક્શન્સ",
+    "completeProfile": "પ્રોફાઇલ પૂર્ણ કરો",
+    "upcomingEvents": "આગામી ઇવેન્ટ્સ",
+    "organicFarming": "ઓર્ગેનિક ફાર્મિંગ",
+    "agriTechExpo": "એગ્રીટેક એક્સપો 2025",
+    "partner": "પાર્ટનર",
+    "professor": "પ્રોફેસર",
+    "architect": "આર્કિટેક્ટ",
+    "network": "નેટવર્ક",
+    "messages": "મેસેજીસ"
+  },
+  "nav": {
+    "search": "શોધો",
+    "notifications": "નોટિફિકેશન્સ",
+    "theme": "થીમ",
+    "language": "ભાષા"
+  },
+  "welcome": {
+    "title": "એગ્રી-થ્રેડમાં સ્વાગત છે",
+    "subtitle": "કૃષિમાં ખેડૂતો, વ્યવસાયો અને પેશાવરોને જોડવું"
+  },
+  "validation": {
+    "required": "આ ફીલ્ડ જરૂરી છે",
+    "email": "કૃપા કરીને માન્ય ઈમેલ દાખલ કરો",
+    "passwordLength": "પાસવર્ડ ઓછામાં ઓછા 6 અક્ષરનો હોવો જોઈએ",
+    "passwordMatch": "પાસવર્ડ મેળ ખાતો નથી"
+  },
+  "common": {
+    "loading": "લોડ થઈ રહ્યું છે...",
+    "error": "એક ભૂલ આવી",
+    "success": "સફળતા",
+    "warning": "ચેતવણી",
+    "info": "માહિતી"
+  }
+}

@@ -1,0 +1,133 @@
+/* Import Gilroy font from local files or Google Fonts alternative */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap');
+
+/* Gilroy font face declarations - add these files to your public/fonts folder */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/fonts/Gilroy-Regular.woff2') format('woff2'),
+       url('/fonts/Gilroy-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/fonts/Gilroy-Medium.woff2') format('woff2'),
+       url('/fonts/Gilroy-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/fonts/Gilroy-SemiBold.woff2') format('woff2'),
+       url('/fonts/Gilroy-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/fonts/Gilroy-Bold.woff2') format('woff2'),
+       url('/fonts/Gilroy-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+    font-family: 'Gilroy', 'Inter', system-ui, sans-serif;
+  }
+  
+  /* Better font stack for Indian languages */
+  .font-indic {
+    font-family: 'Gilroy', 'Noto Sans Tamil', 'Noto Sans Malayalam', 'Inter', system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Tamil-specific fixes */
+[lang="ta"] {
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.01em !important;
+}
+
+[lang="ml"] {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Input field specific fixes for Tamil */
+[lang="ta"] input,
+[lang="ta"] textarea,
+[lang="ta"] select {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+[lang="ml"] input,
+[lang="ml"] textarea,
+[lang="ml"] select {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+/* Placeholder text fixes */
+[lang="ta"] input::placeholder,
+[lang="ta"] textarea::placeholder {
+  font-size: 14px !important;
+  opacity: 0.8 !important;
+  line-height: 1.5 !important;
+}
+
+[lang="ml"] input::placeholder,
+[lang="ml"] textarea::placeholder {
+  font-size: 14px !important;
+  opacity: 0.8 !important;
+  line-height: 1.5 !important;
+}
+
+/* Button text fixes for Tamil */
+[lang="ta"] button {
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.5 !important;
+}
+
+[lang="ml"] button {
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.5 !important;
+}
+
+/* Label and text element fixes */
+[lang="ta"] label,
+[lang="ta"] p,
+[lang="ta"] span {
+  line-height: 1.6 !important;
+}
+
+[lang="ml"] label,
+[lang="ml"] p,
+[lang="ml"] span {
+  line-height: 1.6 !important;
+}
