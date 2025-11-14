@@ -42,6 +42,7 @@ import { LogoWithContainer } from "../ui/Logo";
 import { LanguageSelector } from "../ui/LanguageSelector";
 import { ArrowRight } from "lucide-react";
 import { ProfileCard } from "../screens";
+import { ProgressBar } from "../ui";
 
 interface BasicDetailsLayoutProps {
   children: React.ReactNode;
@@ -61,14 +62,20 @@ const BasicDetailsLayout: React.FC<BasicDetailsLayoutProps> = ({
         {/* Header */}
         <div className="flex gap-4">
           <LogoWithContainer />
-          <div className="w-full h-full flex justify-between items-center mb-4 bg-background-box shadow-[0px_0px_32px_rgba(0,0,0,0.05)] rounded-lg px-4">
-            <h1 className="text-xl font-semibold text-gray-800">
-              Hi, <span className="text-green-600">Gagan</span> — Create your
-              profile as <span className="font-semibold">Farmer</span>
-            </h1>
-            <div className="flex flex-col gap-4">
+          <div className="w-full h-full flex justify-between items-center mb-4 bg-background-box shadow-[0px_0px_32px_rgba(0,0,0,0.05)] rounded-lg px-4 py-2">
+            <div className="font-light">
+              <h1 className="text-lg text-gray-800">
+                Hi, <span className="text-primary font-semibold">Gagan</span>
+              </h1>
+              <p className=" text-lg">
+                Create your profile as{" "}
+                <span className="font-semibold text-primary">Farmer</span>
+              </p>
+            </div>
+
+            <div className="w-[250px] flex flex-col gap-2 items-end">
               <LanguageSelector />
-              <p className="text-gray-600 text-sm">10% Completed</p>
+              <ProgressBar value={10} showLabel={true} />
             </div>
           </div>
         </div>
