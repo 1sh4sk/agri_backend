@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Credits,
   Fingerprint,
@@ -6,6 +6,108 @@ import {
   ProfileIcon,
 } from "../../../assets";
 import { ProgressCircle, ProgressSteps } from "../../ui";
+
+// import React, { useState } from "react";
+// import {
+//   ProfileCardBg,
+//   ProfileIcon as DefaultProfileIcon,
+// } from "../../../assets";
+
+// const ProfileCardHeader: React.FC = () => {
+//   const [bgImage, setBgImage] = useState<string | null>(null);
+//   const [profileImage, setProfileImage] = useState<string | null>(null);
+
+//   const handleBgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const file = e.target.files?.[0];
+//     if (file) setBgImage(URL.createObjectURL(file));
+//   };
+
+//   const handleProfileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const file = e.target.files?.[0];
+//     if (file) setProfileImage(URL.createObjectURL(file));
+//   };
+
+//   return (
+//     <div className="w-full flex flex-col items-center">
+//       {/* Background Image */}
+//       <div
+//         className="w-full h-32 mb-8 relative bg-no-repeat bg-cover"
+//         style={{ backgroundImage: `url(${bgImage || ProfileCardBg})` }}
+//       >
+//         {/* Upload Background Button */}
+//         <label
+//           htmlFor="bg-upload"
+//           className="absolute right-3 top-3 bg-gray-200 border-2 border-white rounded-full p-2 shadow cursor-pointer"
+//         >
+//           <svg
+//             className="w-5 h-5 text-primary"
+//             fill="none"
+//             stroke="currentColor"
+//             strokeWidth={2}
+//             viewBox="0 0 24 24"
+//           >
+//             <path
+//               strokeLinecap="round"
+//               strokeLinejoin="round"
+//               d="M3 7h4l2-3h6l2 3h4v12H3V7z"
+//             />
+//             <circle cx="12" cy="13" r="3" />
+//           </svg>
+//         </label>
+
+//         <input
+//           id="bg-upload"
+//           type="file"
+//           accept="image/*"
+//           className="hidden"
+//           onChange={handleBgUpload}
+//         />
+
+//         {/* Profile Image + Upload Button */}
+//         <div className="absolute left-1/2 -bottom-10 transform -translate-x-1/2 w-24 h-24 bg-white rounded-full flex items-center justify-center shadow border-4 border-gray-200 relative overflow-hidden">
+//           {profileImage ? (
+//             <img
+//               src={profileImage}
+//               alt="Profile"
+//               className="w-full h-full object-cover rounded-full"
+//             />
+//           ) : (
+//             <DefaultProfileIcon />
+//           )}
+
+//           {/* Camera Icon for Profile Upload */}
+//           <label
+//             htmlFor="profile-upload"
+//             className="absolute -right-2 bottom-0 bg-gray-200 border-2 border-white rounded-full p-2 shadow cursor-pointer"
+//           >
+//             <svg
+//               className="w-5 h-5 text-primary"
+//               fill="none"
+//               stroke="currentColor"
+//               strokeWidth={2}
+//               viewBox="0 0 24 24"
+//             >
+//               <path
+//                 strokeLinecap="round"
+//                 strokeLinejoin="round"
+//                 d="M3 7h4l2-3h6l2 3h4v12H3V7z"
+//               />
+//               <circle cx="12" cy="13" r="3" />
+//             </svg>
+//           </label>
+
+//           <input
+//             id="profile-upload"
+//             type="file"
+//             accept="image/*"
+//             className="hidden"
+//             onChange={handleProfileUpload}
+//           />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 const ProfileCard: React.FC = () => {
   const completionPercentage = 40;
@@ -31,6 +133,8 @@ const ProfileCard: React.FC = () => {
               <ProfileIcon />
             </div>
           </div>
+
+          {/* <ProfileCardHeader /> */}
 
           <div className="mt-5 text-center">
             <h2 className="text-lg font-medium text-primary">Gagan Perera</h2>

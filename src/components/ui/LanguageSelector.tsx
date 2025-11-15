@@ -3,6 +3,10 @@ import { Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LanguageCode } from "../../i18n";
 
+interface LanguageSelectorProps {
+  basicDetails?: boolean; // default false
+}
+
 const languages = [
   { code: "en" as LanguageCode, name: "English" },
   { code: "hi" as LanguageCode, name: "हिंदी" },
@@ -16,7 +20,9 @@ const languages = [
   { code: "or" as LanguageCode, name: "ଓଡ଼ିଆ" },
 ];
 
-export const LanguageSelector = () => {
+export const LanguageSelector = ({
+  basicDetails = false,
+}: LanguageSelectorProps) => {
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,7 +39,9 @@ export const LanguageSelector = () => {
     <div className="relative inline-block">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 p-1 bg-white border border-gray-300 rounded hover:border-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        className={`flex items-center gap-2 px-3 p-1 bg-white ${
+          basicDetails ? "border-none" : "border border-gray-300"
+        } rounded hover:border-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
       >
         <Languages size={16} className="text-gray-500" />
         <span className="text-sm text-gray-700">{currentLanguage.name}</span>
