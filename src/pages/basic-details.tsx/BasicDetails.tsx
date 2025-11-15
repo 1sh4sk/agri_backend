@@ -10,46 +10,64 @@ import StepTabs, { steps } from "../../components/ui/StepsTab";
 const BasicDetails: React.FC = () => {
   const [activeTab, setActiveTab] = useState("basic");
 
-  // Get the current index of the active tab
+  // Automatically pick first subTab when main tab changes
+  const activeStep = steps.find((step) => step.id === activeTab);
+  const [activeSubTab, setActiveSubTab] = useState(
+    activeStep?.subTabs?.[0]?.id ?? ""
+  );
+
+  React.useEffect(() => {
+    setActiveSubTab(activeStep?.subTabs?.[0]?.id ?? "");
+  }, [activeStep?.subTabs]);
+
+  // INDEX
   const currentIndex = steps.findIndex((step) => step.id === activeTab);
 
-  // Go to the previous tab when clicking "Next"
+  // Navigation
   const handlePrev = () => {
-    if (currentIndex > 0) {
-      setActiveTab(steps[currentIndex - 1].id);
-    }
+    if (currentIndex > 0) setActiveTab(steps[currentIndex - 1].id);
   };
 
-  // Go to the next tab when clicking "Next"
   const handleNext = () => {
-    if (currentIndex < steps.length - 1) {
+    if (currentIndex < steps.length - 1)
       setActiveTab(steps[currentIndex + 1].id);
-    }
   };
 
-  // Handle Save
   const handleSave = () => {
-    console.log("Form data saved for:", activeTab);
+    console.log("Saved:", activeTab, activeSubTab);
   };
 
+  // RENDERING FORMS BY MAIN + SUBTAB
   const renderForm = () => {
-    switch (activeTab) {
-      case "basic":
-        return <BasicDetailsForm />;
-      case "kyc":
-        return <KYCForm />;
-      case "farmer":
-        return <FarmerDetailsForm />;
-      case "farm":
-        return <FarmDetailsForm />;
-      case "crop":
-        return <CropsAvailabilityForm />;
-      default:
-        return <div>Select a section to continue</div>;
+    if (activeTab === "basic") {
+      if (activeSubTab === "basic") return <BasicDetailsForm />;
     }
-  };
 
-  const activeLabel = steps.find((step) => step.id === activeTab)?.label;
+    if (activeTab === "kyc") {
+      if (activeSubTab === "aadhaar") return <KYCForm />;
+      if (activeSubTab === "pan") return <KYCForm />;
+      if (activeSubTab === "others") return <KYCForm />;
+    }
+
+    if (activeTab === "farmer") {
+      if (activeSubTab === "farmer") return <FarmerDetailsForm />;
+    }
+
+    if (activeTab === "farm") {
+      if (activeSubTab === "landandcropdetails") return <FarmDetailsForm />;
+    }
+
+    if (activeTab === "crop") {
+      if (activeSubTab === "croplist") return <CropsAvailabilityForm />;
+      if (activeSubTab === "availability") return <CropsAvailabilityForm />;
+    }
+
+    // if (activeTab === "additional") {
+    //   if (activeSubTab === "additional") return <AdditionalForm />;
+    // }
+
+    return <div>Select a section to continue</div>;
+  };
 
   return (
     <BasicDetailsLayout
@@ -58,18 +76,31 @@ const BasicDetails: React.FC = () => {
       onSave={handleSave}
       isFirstStep={currentIndex === 0}
     >
-      <div className="max-w-6xl mx-auto w-full py-6">
-        {/* Steps Tabs */}
+      <div className="w-full py-4">
+        {/* Main Steps */}
         <StepTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-        {/* Section Label */}
-        <div className="w-full bg-background-box border border-r-0 border-t-0 border-l-0 border-b-1 my-6 rounded-md">
-          <p className="w-fit px-4 py-3 border border-r-0 border-t-0 border-l-0 border-b-2 border-primary text-primary font-medium">
-            {activeLabel}
-          </p>
+        {/* Sub Tabs */}
+        <div className="w-full px-4 my-6">
+          {/* SubTabs mapping */}
+          <div className="flex gap-3 border-b ">
+            {activeStep?.subTabs?.map((st) => (
+              <button
+                key={st.id}
+                onClick={() => setActiveSubTab(st.id)}
+                className={`px-3 pb-2 border-b-2 text-sm ${
+                  activeSubTab === st.id
+                    ? "border-primary text-primary font-semibold"
+                    : "border-transparent text-gray-500"
+                }`}
+              >
+                {st.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Render current form */}
+        {/* Render Selected Form */}
         {renderForm()}
       </div>
     </BasicDetailsLayout>

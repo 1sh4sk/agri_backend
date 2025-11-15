@@ -26,6 +26,7 @@ export default {
           yellow: "#FFD724",
           indigo: "#364153",
           lightgreen: "#00BD35",
+          green: "#16D271",
         },
       },
       fontFamily: {

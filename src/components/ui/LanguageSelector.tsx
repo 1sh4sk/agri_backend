@@ -39,8 +39,8 @@ export const LanguageSelector = ({
     <div className="relative inline-block">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-2 px-3 p-1 bg-white ${
-          basicDetails ? "border-none" : "border border-gray-300"
+        className={`flex items-center gap-2 p-1 bg-white ${
+          basicDetails ? "border-none" : "border border-gray-300 px-3 "
         } rounded hover:border-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
       >
         <Languages size={16} className="text-gray-500" />

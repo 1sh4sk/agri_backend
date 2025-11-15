@@ -13,13 +13,59 @@ interface StepTabsProps {
   onTabChange: (tab: string) => void;
 }
 
+// export const steps = [
+//   { id: "basic", label: "Basic Details", icon: Profile },
+//   { id: "kyc", label: "KYC & Verification", icon: Fingerprint },
+//   { id: "farmer", label: "Farmer Details", icon: Farmer },
+//   { id: "farm", label: "Farm Details", icon: Farm },
+//   { id: "crop", label: "Crops & Availability", icon: Crops },
+//   { id: "additional", label: "Additional Info", icon: Additional },
+// ];
+
 export const steps = [
-  { id: "basic", label: "Basic Details", icon: Profile },
-  { id: "kyc", label: "KYC & Verification", icon: Fingerprint },
-  { id: "farmer", label: "Farmer Details", icon: Farmer },
-  { id: "farm", label: "Farm Details", icon: Farm },
-  { id: "crop", label: "Crops & Availability", icon: Crops },
-  { id: "additional", label: "Additional Info", icon: Additional },
+  {
+    id: "basic",
+    label: "Basic Details",
+    icon: Profile,
+    subTabs: [{ id: "basic", label: "Basic Details" }],
+  },
+  {
+    id: "kyc",
+    icon: Fingerprint,
+    label: "KYC & Verification",
+    subTabs: [
+      { id: "aadhaar", label: "Aadhaar" },
+      { id: "pan", label: "PAN" },
+      { id: "others", label: "Others" },
+    ],
+  },
+  {
+    id: "farmer",
+    icon: Farmer,
+    label: "Farmer Details",
+    subTabs: [{ id: "farmer", label: "Farmer Details" }],
+  },
+  {
+    id: "farm",
+    icon: Farm,
+    label: "Farm Details",
+    subTabs: [{ id: "landandcropdetails", label: "Land & Crop Details" }],
+  },
+  {
+    id: "crop",
+    icon: Crops,
+    label: "Crops & Availability",
+    subTabs: [
+      { id: "croplist", label: "Crop List" },
+      { id: "availability", label: "Availability" },
+    ],
+  },
+  {
+    id: "additional",
+    label: "Additional Info",
+    icon: Additional,
+    subTabs: [{ id: "additional", label: "Additional Info" }],
+  },
 ];
 
 const StepTabs: React.FC<StepTabsProps> = ({ activeTab, onTabChange }) => {
@@ -42,7 +88,7 @@ const StepTabs: React.FC<StepTabsProps> = ({ activeTab, onTabChange }) => {
           >
             <Icon
               className={`w-5 h-5 mb-3 ${
-                isActive ? "text-white fill-white" : "text-primary fill-primary"
+                isActive ? "text-white " : "text-primary"
               }`}
             />
 

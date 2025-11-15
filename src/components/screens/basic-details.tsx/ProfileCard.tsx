@@ -5,7 +5,8 @@ import {
   ProfileCardBg,
   ProfileIcon,
 } from "../../../assets";
-import { ProgressCircle, ProgressSteps } from "../../ui";
+import { ProgressCircle, ProgressSteps, StatusCard } from "../../ui";
+import { Shield } from "lucide-react";
 
 // import React, { useState } from "react";
 // import {
@@ -13,101 +14,101 @@ import { ProgressCircle, ProgressSteps } from "../../ui";
 //   ProfileIcon as DefaultProfileIcon,
 // } from "../../../assets";
 
-// const ProfileCardHeader: React.FC = () => {
-//   const [bgImage, setBgImage] = useState<string | null>(null);
-//   const [profileImage, setProfileImage] = useState<string | null>(null);
+const ProfileCardHeader: React.FC = () => {
+  const [bgImage, setBgImage] = useState<string | null>(null);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
 
-//   const handleBgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const file = e.target.files?.[0];
-//     if (file) setBgImage(URL.createObjectURL(file));
-//   };
+  const handleBgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) setBgImage(URL.createObjectURL(file));
+  };
 
-//   const handleProfileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const file = e.target.files?.[0];
-//     if (file) setProfileImage(URL.createObjectURL(file));
-//   };
+  const handleProfileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) setProfileImage(URL.createObjectURL(file));
+  };
 
-//   return (
-//     <div className="w-full flex flex-col items-center">
-//       {/* Background Image */}
-//       <div
-//         className="w-full h-32 mb-8 relative bg-no-repeat bg-cover"
-//         style={{ backgroundImage: `url(${bgImage || ProfileCardBg})` }}
-//       >
-//         {/* Upload Background Button */}
-//         <label
-//           htmlFor="bg-upload"
-//           className="absolute right-3 top-3 bg-gray-200 border-2 border-white rounded-full p-2 shadow cursor-pointer"
-//         >
-//           <svg
-//             className="w-5 h-5 text-primary"
-//             fill="none"
-//             stroke="currentColor"
-//             strokeWidth={2}
-//             viewBox="0 0 24 24"
-//           >
-//             <path
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//               d="M3 7h4l2-3h6l2 3h4v12H3V7z"
-//             />
-//             <circle cx="12" cy="13" r="3" />
-//           </svg>
-//         </label>
+  return (
+    <div className="w-full flex flex-col items-center">
+      {/* Background Image */}
+      <div
+        className="w-full h-32 mb-8 relative bg-no-repeat bg-cover"
+        style={{ backgroundImage: `url(${bgImage || ProfileCardBg})` }}
+      >
+        {/* Upload Background Button */}
+        <label
+          htmlFor="bg-upload"
+          className="absolute right-3 top-3 bg-gray-200 border-2 border-white rounded-full p-1 shadow cursor-pointer"
+        >
+          <svg
+            className="w-5 h-5 text-primary"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 7h4l2-3h6l2 3h4v12H3V7z"
+            />
+            <circle cx="12" cy="13" r="3" />
+          </svg>
+        </label>
 
-//         <input
-//           id="bg-upload"
-//           type="file"
-//           accept="image/*"
-//           className="hidden"
-//           onChange={handleBgUpload}
-//         />
+        <input
+          id="bg-upload"
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleBgUpload}
+        />
 
-//         {/* Profile Image + Upload Button */}
-//         <div className="absolute left-1/2 -bottom-10 transform -translate-x-1/2 w-24 h-24 bg-white rounded-full flex items-center justify-center shadow border-4 border-gray-200 relative overflow-hidden">
-//           {profileImage ? (
-//             <img
-//               src={profileImage}
-//               alt="Profile"
-//               className="w-full h-full object-cover rounded-full"
-//             />
-//           ) : (
-//             <DefaultProfileIcon />
-//           )}
+        {/* Profile Image + Upload Button */}
+        <div className=" left-1/2 -bottom-1/2 transform -translate-x-1/2 w-24 h-24 bg-white rounded-full flex items-center justify-center shadow border-4 border-gray-200 relative ">
+          {profileImage ? (
+            <img
+              src={profileImage}
+              alt="Profile"
+              className="w-full h-full object-cover rounded-full"
+            />
+          ) : (
+            <ProfileIcon />
+          )}
 
-//           {/* Camera Icon for Profile Upload */}
-//           <label
-//             htmlFor="profile-upload"
-//             className="absolute -right-2 bottom-0 bg-gray-200 border-2 border-white rounded-full p-2 shadow cursor-pointer"
-//           >
-//             <svg
-//               className="w-5 h-5 text-primary"
-//               fill="none"
-//               stroke="currentColor"
-//               strokeWidth={2}
-//               viewBox="0 0 24 24"
-//             >
-//               <path
-//                 strokeLinecap="round"
-//                 strokeLinejoin="round"
-//                 d="M3 7h4l2-3h6l2 3h4v12H3V7z"
-//               />
-//               <circle cx="12" cy="13" r="3" />
-//             </svg>
-//           </label>
+          {/* Camera Icon for Profile Upload */}
+          <label
+            htmlFor="profile-upload"
+            className="absolute -right-2 bottom-0 bg-gray-200 border-2 border-white rounded-full p-1 shadow cursor-pointer"
+          >
+            <svg
+              className="w-5 h-5 text-primary"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 7h4l2-3h6l2 3h4v12H3V7z"
+              />
+              <circle cx="12" cy="13" r="3" />
+            </svg>
+          </label>
 
-//           <input
-//             id="profile-upload"
-//             type="file"
-//             accept="image/*"
-//             className="hidden"
-//             onChange={handleProfileUpload}
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+          <input
+            id="profile-upload"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleProfileUpload}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ProfileCard: React.FC = () => {
   const completionPercentage = 40;
@@ -125,14 +126,16 @@ const ProfileCard: React.FC = () => {
       <div className="w-full bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] flex flex-col items-center relative overflow-auto pb-10">
         {/* Profile Header */}
         <div className="w-full flex flex-col items-center">
-          <div
+          {/* <div
             className="w-full h-32 mb-8 relative bg-no-repeat bg-cover"
             style={{ backgroundImage: `url(${ProfileCardBg})` }}
           >
             <div className="absolute left-1/2 -bottom-10 transform -translate-x-1/2 w-24 h-24 bg-white rounded-full flex items-center justify-center shadow border-4 border-gray-200">
               <ProfileIcon />
             </div>
-          </div>
+          </div> */}
+
+          <ProfileCardHeader />
 
           {/* <ProfileCardHeader /> */}
 
@@ -142,7 +145,7 @@ const ProfileCard: React.FC = () => {
               Level 0
             </p>
             <p className="text-xs text-gray-500 flex gap-1 items-center">
-              <Credits className="text-7xl" /> Credits Earned: 10
+              <Credits className="w-3 h-3" /> Credits Earned: 10
             </p>
           </div>
         </div>
@@ -182,17 +185,22 @@ const ProfileCard: React.FC = () => {
         <div className="mt-6 w-full flex flex-col gap-3 px-6">
           <div className="border border-color-yellow rounded-xl px-4 py-3 text-sm text-yellow-600 bg-yellow-50 flex items-center gap-2">
             <div className="rounded-full border border-color-yellow p-3">
-              <Fingerprint />
+              <Fingerprint className="text-color-yellow" />
             </div>
             <div className="text-color-indigo">
-              <p className="font-medium">KYC Pending</p>
+              <p className="font-medium text-xs mb-1">KYC Pending</p>
               <p className="text-xs font-light">Verification Pending</p>
             </div>
           </div>
 
-          <div className="border border-color-yellow rounded-xl px-4 py-3 text-sm text-yellow-600 bg-yellow-50">
-            <p className="font-medium">Verification Pending</p>
-            <p className="text-xs text-color-yellow">Complete 4 more steps</p>
+          <div className="border border-color-yellow rounded-xl px-4 py-3 text-sm text-yellow-600 bg-yellow-50 flex items-center gap-2">
+            <div className="rounded-full border border-color-yellow p-3">
+              <Shield className="text-color-yellow" />
+            </div>
+            <div className="text-color-indigo">
+              <p className="font-medium text-xs mb-1">Verification Pending</p>
+              <p className="text-xs font-light">Complete 4 more steps</p>
+            </div>
           </div>
         </div>
       </div>
