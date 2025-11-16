@@ -1,104 +1,127 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '../ui/Button';
-import { Input } from '../ui/Input';
+import { Inputs } from '../ui/Inputs';
 import { AuthLayout } from '../layout/AuthLayout';
+import { createSignupSchema, SignupFormData } from '../validation/signupSchema';
+import signUp from '../../assets/login.png';
+import { useTranslation } from 'react-i18next';
 
 interface SignUpScreenProps {
   onLogin: () => void;
-  onSuccess: () => void;
+  onSuccess: (data: SignupFormData) => void;
+  onGuestContinue?: () => void;
 }
 
-export const SignUpScreen = ({ onLogin, onSuccess }: SignUpScreenProps) => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    mobile: '',
+export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScreenProps) => {
+  const { t } = useTranslation();
+  const [countryCode, setCountryCode] = useState('+91');
+
+  const signupSchema = createSignupSchema(t);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignupFormData>({
+    resolver: yupResolver(signupSchema),
+    defaultValues: {
+      fullName: '',
+      email: '',
+      mobile: '',
+      countryCode: '+91',
+    },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSuccess();
+  const onSubmit = (data: SignupFormData) => {
+    // Add country code to the data
+    const formData = { ...data, countryCode };
+    onSuccess(formData);
+  };
+
+  const handleGuestContinue = () => {
+    if (onGuestContinue) {
+      onGuestContinue();
+    } else {
+      // Default guest behavior - proceed without role selection
+      console.log('Continuing as guest');
+    }
   };
 
   return (
-    <AuthLayout imageUrl="https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=1200">
+    <AuthLayout 
+      imageUrl={signUp} 
+      showGuestButton={true}
+      onGuestContinue={handleGuestContinue}
+    >
       <div className="space-y-6">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2 flex items-center justify-center gap-2">
-            Welcome 👋
+          <h1 className="text-xl font-semibold text-gray-900 mb-2 flex items-center justify-center gap-2">
+            {t('welcome')}
           </h1>
-          <p className="text-sm text-gray-600">
-            Sign Up to your account
+          <p className="text-xs font-semibold text-gray-600">
+            {t('signupTitle')}
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Full Name
-            </label>
-            <Input
-              type="text"
-              placeholder="Gagan Perera"
-              value={formData.fullName}
-              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email Id
-            </label>
-            <Input
-              type="email"
-              placeholder="gaganperera@gmail.com"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Mobile No.
-            </label>
-            <div className="flex gap-2">
-              <select className="px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-                <option>+91</option>
-              </select>
-              <Input
-                type="tel"
-                placeholder="Enter Mobile No."
-                value={formData.mobile}
-                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-              />
-            </div>
-          </div>
-
-          <Button
-            type="submit"
-            variant="primary"
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+          <Inputs
+            label={t('fullNameLabel')}
+            type="text"
+            placeholder={t('fullNamePlaceholder')}
+            register={register}
+            name="fullName"
+            error={errors.fullName}
             fullWidth
-            className="mt-6 bg-primary hover:bg-primary-600"
-          >
-            Get OTP
-          </Button>
+          />
 
-          <div className="text-center text-sm text-gray-600">
-            Already have a account?{' '}
-            <button type="button" onClick={onLogin} className="text-primary font-semibold underline hover:text-primary-600">
-              Login
-            </button>
-          </div>
+          <Inputs
+            label={t('emailLabel')}
+            type="email"
+            placeholder={t('emailPlaceholder')}
+            register={register}
+            name="email"
+            error={errors.email}
+            fullWidth
+          />
 
-          <div className="text-center">
-            <button
-              type="button"
-              className="text-sm text-primary font-semibold underline hover:text-primary-600"
+          <Inputs
+            label={t('mobileLabel')}
+            type="tel"
+            placeholder={t('mobilePlaceholder')}
+            register={register}
+            name="mobile"
+            error={errors.mobile}
+            fullWidth
+            withCountryCode
+            countryCode={countryCode}
+            onCountryCodeChange={setCountryCode}
+          />
+
+          <div className='mt-10'>
+            <Button
+              type="submit"
+              variant="primary"
+              fullWidth
+              disabled={isSubmitting}
+              className="mt-6 bg-primary hover:bg-primary-600 disabled:opacity-50 text-white font-medium py-3 rounded-[4px]"
             >
-              Continue as Guest
-            </button>
+              {isSubmitting ? t('processing') : t('getOTP')}
+            </Button>
           </div>
         </form>
+
+        <div className="text-center text-sm text-gray-600">
+          {t('alreadyAccount')}{' '}
+          <button 
+            type="button" 
+            onClick={onLogin} 
+            className="text-primary font-semibold underline hover:text-primary-600"
+          >
+            {t('login')}
+          </button>
+        </div>
       </div>
     </AuthLayout>
   );

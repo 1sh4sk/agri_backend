@@ -176,7 +176,7 @@
 
 
 import { useState, useEffect } from 'react';
-import { LanguageSelection } from './pages/LanguageSelection';
+import { LanguageSelection } from './components/screens/LanguageSelection';
 // import { RoleSelection } from './pages/RoleSelection';
 // import { Login } from './pages/Login';
 // import { Signup } from './pages/Signup';

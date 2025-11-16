@@ -1,31 +1,109 @@
+// i18n/index.ts
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import en from './locales/en.json';
-import hi from './locales/hi.json';
-import bn from './locales/bn.json';
-import gu from './locales/gu.json';
-import mr from './locales/mr.json';
-import or from './locales/or.json';
-import pa from './locales/pa.json';
-import ta from './locales/ta.json';
-import te from './locales/te.json';
-import ml from './locales/ml.json';
+// Import the component-specific JSON files
+import roleSelection from './locales/roleSelection.json';
+import login from './locales/login.json';
+import signup from './locales/signup.json';
+import otp from './locales/otp.json';
+import  AuthLayout from './locales/authLayout.json'
 
 export type LanguageCode = 'en' | 'hi' | 'bn' | 'mr' | 'gu' | 'ta' | 'te' | 'ml' | 'pa' | 'or';
 
+// Combine all translations
 const resources = {
-  en: { translation: en },
-  hi: { translation: hi },
-  bn: { translation: bn },
-  gu: { translation: gu },
-  mr: { translation: mr },
-  or: { translation: or },
-  pa: { translation: pa },
-  ta: { translation: ta },
-  te: { translation: te },
-  ml: { translation: ml },
+  en: { 
+    translation: {
+      ...roleSelection.en,
+      ...login.en,
+      ...signup.en,
+      ...otp.en,
+      ...AuthLayout.en
+    }
+  },
+  hi: { 
+    translation: {
+      ...roleSelection.hi,
+      ...login.hi,
+      ...signup.hi,
+      ...otp.hi,
+      ...AuthLayout.hi
+    }
+  },
+  bn: { 
+    translation: {
+      ...roleSelection.bn,
+      ...login.bn,
+      ...signup.bn,
+      ...otp.bn,
+      ...AuthLayout.bn
+    }
+  },
+  mr: { 
+    translation: {
+      ...roleSelection.mr,
+      ...login.mr,
+      ...signup.mr,
+      ...otp.mr,
+       ...AuthLayout.mr
+    }
+  },
+  gu: { 
+    translation: {
+      ...roleSelection.gu,
+      ...login.gu,
+      ...signup.gu,
+      ...otp.gu,
+       ...AuthLayout.gu
+    }
+  },
+  ta: { 
+    translation: {
+      ...roleSelection.ta,
+      ...login.ta,
+      ...signup.ta,
+      ...otp.ta,
+       ...AuthLayout.ta
+    }
+  },
+  te: { 
+    translation: {
+      ...roleSelection.te,
+      ...login.te,
+      ...signup.te,
+      ...otp.te,
+       ...AuthLayout.te
+    }
+  },
+  ml: { 
+    translation: {
+      ...roleSelection.ml,
+      ...login.ml,
+      ...signup.ml,
+      ...otp.ml,
+       ...AuthLayout.ml
+    }
+  },
+  pa: { 
+    translation: {
+      ...roleSelection.pa,
+      ...login.pa,
+      ...signup.pa,
+      ...otp.pa,
+       ...AuthLayout.pa
+    }
+  },
+  or: { 
+    translation: {
+      ...roleSelection.or,
+      ...login.or,
+      ...signup.or,
+      ...otp.or,
+       ...AuthLayout.or
+    }
+  },
 };
 
 i18n

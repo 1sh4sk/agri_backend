@@ -1,0 +1,72 @@
+{
+  "en": {
+    "authLayout": {
+      "title": "Agro, Made simple",
+      "subtitle": "Welcome to AgriThread — India's digital farming network.",
+      "continueAsGuest": "Continue as Guest"
+    }
+  },
+  "hi": {
+    "authLayout": {
+      "title": "कृषि, सरल बनाई गई",
+      "subtitle": "AgriThread में आपका स्वागत है — भारत का डिजिटल कृषि नेटवर्क।",
+      "continueAsGuest": "अतिथि के रूप में जारी रखें"
+    }
+  },
+  "bn": {
+    "authLayout": {
+      "title": "কৃষি, সহজভাবে তৈরি",
+      "subtitle": "AgriThread এ স্বাগতম — ভারতের ডিজিটাল কৃষি নেটওয়ার্ক।",
+      "continueAsGuest": "অতিথি হিসাবে চালিয়ে যান"
+    }
+  },
+  "mr": {
+    "authLayout": {
+      "title": "कृषी, सोपे केले",
+      "subtitle": "AgriThread मध्ये आपले स्वागत आहे — भारताचे डिजिटल शेती नेटवर्क।",
+      "continueAsGuest": "पाहुणा म्हणून सुरू ठेवा"
+    }
+  },
+  "gu": {
+    "authLayout": {
+      "title": "કૃષિ, સરળ બનાવેલ",
+      "subtitle": "AgriThread માં આપનું સ્વાગત છે — ભારતનું ડિજિટલ ખેતી નેટવર્ક।",
+      "continueAsGuest": "મહેમાન તરીકે ચાલુ રાખો"
+    }
+  },
+  "ta": {
+    "authLayout": {
+      "title": "விவசாயம், எளிதாக்கப்பட்டது",
+      "subtitle": "AgriThread-க்கு வரவேற்கிறோம் — இந்தியாவின் டிஜிட்டல் விவசாய பிணையம்.",
+      "continueAsGuest": "விருந்தினராக தொடரவும்"
+    }
+  },
+  "te": {
+    "authLayout": {
+      "title": "వ్యవసాయం, సరళంగా చేసిన",
+      "subtitle": "AgriThread కు స్వాగతం — భారతదేశం యొక్క డిజిటల్ వ్యవసాయ నెట్‌వర్క్.",
+      "continueAsGuest": "అతిథిగా కొనసాగించండి"
+    }
+  },
+  "ml": {
+    "authLayout": {
+      "title": "കാർഷികം, ലളിതമാക്കി",
+      "subtitle": "AgriThread-ലേക്ക് സ്വാഗതം — ഇന്ത്യയുടെ ഡിജിറ്റൽ കാർഷിക നെറ്റ്‌വർക്ക്.",
+      "continueAsGuest": "അതിഥിയായി തുടരുക"
+    }
+  },
+  "pa": {
+    "authLayout": {
+      "title": "ਖੇਤੀ, ਸੌਖੀ ਬਣਾਈ",
+      "subtitle": "AgriThread ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ — ਭਾਰਤ ਦਾ ਡਿਜੀਟਲ ਖੇਤੀ ਨੈੱਟਵਰਕ।",
+      "continueAsGuest": "ਮਹਿਮਾਨ ਵਜੋਂ ਜਾਰੀ ਰੱਖੋ"
+    }
+  },
+  "or": {
+    "authLayout": {
+      "title": "କୃଷି, ସରଳ କରାଯାଇଛି",
+      "subtitle": "AgriThread କୁ ସ୍ୱାଗତ — ଭାରତର ଡିଜିଟାଲ କୃଷି ନେଟୱାର୍କ।",
+      "continueAsGuest": "ଅତିଥି ଭାବରେ ଜାରି ରଖନ୍ତୁ"
+    }
+  }
+}

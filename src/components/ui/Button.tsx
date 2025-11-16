@@ -84,18 +84,18 @@ export const Button = ({
   disabled,
   ...props
 }: ButtonProps) => {
-  const baseStyles = 'font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center gap-2';
+  const baseStyles = 'font-medium text-[16px] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center gap-2';
 
   const variantStyles = {
-    primary: 'bg-primary text-white hover:bg-primary-600 focus:ring-primary/50 disabled:bg-gray-400 disabled:cursor-not-allowed',
-    primaryNew: 'bg-white text-primary border-[1.2px] border-primary hover:bg-primary hover:text-white focus:ring-primary/50 disabled:bg-gray-300 disabled:border-gray-300 disabled:cursor-not-allowed disabled:opacity-60',
+    primary: 'bg-primary text-white hover:bg-primary-600 rounded-[8px] focus:ring-primary/50 disabled:bg-gray-400 disabled:cursor-not-allowed',
+    primaryNew: 'bg-white w-[144px] h-[56px] rounded-[12px]  text-primary border-[1.2px] border-primary hover:bg-primary hover:text-white focus:ring-primary/50 disabled:bg-gray-300 disabled:border-gray-300 disabled:cursor-not-allowed disabled:opacity-60',
     secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500 disabled:bg-gray-400 disabled:cursor-not-allowed',
     outline: 'border-[1.2px] border-primary text-primary bg-white hover:bg-primary hover:text-white focus:ring-primary/50 disabled:border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed',
   };
 
   const sizeStyles = {
     sm: 'px-4 py-2 text-sm rounded-lg',
-    md: 'w-36 h-14 rounded-xl px-4 py-4 text-base', // Exact dimensions from specs
+    md: 'w-36 h-10 rounded-[12px] px-4 py-4 text-base', // Exact dimensions from specs
     lg: 'px-10 py-4 text-lg rounded-lg',
   };
 

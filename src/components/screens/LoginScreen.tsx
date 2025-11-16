@@ -1,95 +1,146 @@
-import { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '../ui/Button';
-import { Input } from '../ui/Input';
+import { Inputs } from '../ui/Inputs';
 import { AuthLayout } from '../layout/AuthLayout';
+import { createLoginSchema, LoginFormData } from '../validation/loginValidationSchema';
+import login from '../../assets/login.png';
+import { useTranslation } from 'react-i18next';
 
 interface LoginScreenProps {
   onSignup: () => void;
-  onSuccess: () => void;
+  onSuccess: (data: LoginFormData) => void;
+  onGuestContinue?: () => void;
 }
 
-export const LoginScreen = ({ onSignup, onSuccess }: LoginScreenProps) => {
-  const [formData, setFormData] = useState({
-    email: '',
-    mobile: '',
+export const LoginScreen = ({ onSignup, onSuccess, onGuestContinue }: LoginScreenProps) => {
+  const { t } = useTranslation();
+  
+  const loginSchema = React.useMemo(() => createLoginSchema(t), [t]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    watch
+  } = useForm<LoginFormData>({
+    resolver: yupResolver(loginSchema),
+    mode: 'onChange',
+    defaultValues: {
+      email: '',
+      mobile: '',
+    }
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSuccess();
+  const [countryCode, setCountryCode] = React.useState('+91');
+
+  // Watch form values to enable/disable submit button
+  const formValues = watch();
+  const hasAtLeastOneField = !!(formValues.email || formValues.mobile);
+
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      // Here you would typically make an API call to send OTP
+      console.log('Login data:', data);
+      onSuccess(data);
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
+  const handleCountryCodeChange = (code: string) => {
+    setCountryCode(code);
+  };
+
+  const handleGuestContinue = () => {
+    if (onGuestContinue) {
+      onGuestContinue();
+    } else {
+      // Default guest behavior - proceed without role selection
+      console.log('Continuing as guest');
+    }
   };
 
   return (
-    <AuthLayout imageUrl="https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=1200">
+    <AuthLayout 
+      imageUrl={login} 
+      showGuestButton={true}
+      onGuestContinue={handleGuestContinue} 
+    >
       <div className="space-y-6">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2 flex items-center justify-center gap-2">
-            Welcome 👋
+          <h1 className="text-2xl font-semibold text-gray-900 mb-2 flex items-center justify-center gap-2">
+            {t('welcome')}
           </h1>
-          <p className="text-sm text-gray-600">
-            Login to your account
+          <p className="text-md font-semibold text-gray-600">
+            {t('loginTitle')}
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email Id
-            </label>
-            <Input
-              type="email"
-              placeholder="gaganperera@gmail.com"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            />
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-1">
+          {/* Email Input */}
+          <Inputs<LoginFormData>
+            type="email"
+            label={t('emailLabel')}
+            placeholder={t('emailPlaceholder')}
+            error={errors.email}
+            register={register}
+            name="email"
+          />
+
+          {/* Or separator with shorter lines */}
+          <div className="flex items-center px-2 justify-center pt-2">
+            <div className="flex-grow border-t border-gray-300 max-w-[140px]"></div>
+            <span className="mx-4 text-sm text-gray-500 font-medium">{t('or')}</span>
+            <div className="flex-grow border-t border-gray-300 max-w-[140px]"></div>
           </div>
 
-          <div className="text-center py-2">
-            <span className="text-sm text-gray-500 font-medium">Or</span>
-          </div>
+          {/* Phone Input with Country Code */}
+          <Inputs<LoginFormData>
+            type="tel"
+            label={t('mobileLabel')}
+            placeholder={t('mobilePlaceholder')}
+            error={errors.mobile}
+            register={register}
+            name="mobile"
+            withCountryCode={true}
+            countryCode={countryCode}
+            onCountryCodeChange={handleCountryCodeChange}
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Mobile No.
-            </label>
-            <div className="flex gap-2">
-              <select className="px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-                <option>+91</option>
-              </select>
-              <Input
-                type="tel"
-                placeholder="Enter Mobile No."
-                value={formData.mobile}
-                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-              />
+          {/* Show validation error for at least one field */}
+          {errors.root && (
+            <div className="text-center">
+              <p className="text-sm text-red-600">
+                {errors.root.message}
+              </p>
             </div>
-          </div>
+          )}
 
-          <Button
-            type="submit"
-            variant="primary"
-            fullWidth
-            className="mt-6 bg-primary hover:bg-primary-600"
-          >
-            Get OTP
-          </Button>
-
-          <div className="text-center text-sm text-gray-600">
-            Don't have an account yet?{' '}
-            <button type="button" onClick={onSignup} className="text-primary font-semibold underline hover:text-primary-600">
-              Sign Up
-            </button>
-          </div>
-
-          <div className="text-center">
-            <button
-              type="button"
-              className="text-sm text-primary font-semibold underline hover:text-primary-600"
+          <div className='mt-10'>
+            <Button
+              type="submit"
+              variant="primary"
+              fullWidth
+              disabled={isSubmitting || !hasAtLeastOneField}
+              className="mt-6 bg-primary hover:bg-primary-600 disabled:opacity-50 text-white font-medium py-3 rounded-[4px]"
             >
-              Continue as Guest
-            </button>
+              {isSubmitting ? t('sendingOTP') : t('getOTP')}
+            </Button>
           </div>
         </form>
+
+        <div className="text-center text-xs text-black">
+          {t('noAccount')}{' '}
+          <button 
+            type="button" 
+            onClick={onSignup} 
+            className="text-primary font-semibold underline hover:text-primary-600"
+          >
+            {t('signUp')}
+          </button>
+        </div>
       </div>
     </AuthLayout>
   );
