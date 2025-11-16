@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import BasicDetailsForm from "../../components/screens/basic-details.tsx/BasicDetailsForm";
 import KYCForm from "../../components/screens/basic-details.tsx/KYCForm";
 import FarmerDetailsForm from "../../components/screens/basic-details.tsx/FarmerDetailsForm";
-import FarmDetailsForm from "../../components/screens/basic-details.tsx/FarmDetailsForm";
+// import FarmDetailsForm from "../../components/screens/basic-details.tsx/FarmDetailsForm";
 import CropsAvailabilityForm from "../../components/screens/basic-details.tsx/CropsAvailabilityForm";
 
 import BasicDetailsLayout from "../../components/layout/BasicDetailsLayout";

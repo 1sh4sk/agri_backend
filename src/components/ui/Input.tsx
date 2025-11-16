@@ -79,6 +79,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   fullWidth?: boolean;
   basicDetails?: boolean; // <---- optional style modifier
   required?: boolean;
+  crop?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -88,6 +89,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       error,
       fullWidth = true,
       basicDetails = false,
+      crop = false,
       className = "",
       required = false,
       ...props
@@ -104,11 +106,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const basicDetailsStyles = basicDetails
       ? "bg-white shadow-sm  text-sm"
       : "";
+      const cropStyle  = crop ?  "bg-white w-[300px] h-[40px] rounded-[8px] border-[1px] text-[14px] shadow-sm "
+      : "";
 
     return (
       <div className={fullWidth ? "w-full" : ""}>
         {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-[#9DA2AB] mb-2">
             {label}
             {required && <span className="text-red-500"> *</span>}
           </label>
@@ -116,7 +120,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         <input
           ref={ref}
-          className={`${baseStyles} ${errorStyles} ${widthStyle} ${basicDetailsStyles} ${className}`}
+          className={`${baseStyles} ${errorStyles} ${widthStyle} ${basicDetailsStyles} ${cropStyle} ${className}`}
           {...props}
         />
 
