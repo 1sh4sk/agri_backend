@@ -28,7 +28,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
 
       <select
         {...register(name)}
-        className={`w-full border rounded-md px-3 py-3 ${
+        className={`w-full border rounded-md px-3 py-3 text-sm ${
           error ? "border-red-500" : ""
         } ${className}`}
       >

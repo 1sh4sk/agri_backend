@@ -59,7 +59,12 @@ export const steps = [
     id: "additional",
     label: "Additional Info",
     icon: Additional,
-    subTabs: [{ id: "additional", label: "Additional Info" }],
+    subTabs: [
+      { id: "certificates", label: "Certificates" },
+      { id: "awards", label: "Awards" },
+      { id: "sellingpreferences", label: "Selling Preferences" },
+      { id: "mediaupload", label: "Media Upload" },
+    ],
   },
 ];
 

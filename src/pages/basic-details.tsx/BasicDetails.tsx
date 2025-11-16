@@ -11,7 +11,11 @@ import CropsAvailabilityForm from "../../components/screens/basic-details.tsx/Cr
 import BasicDetailsLayout from "../../components/layout/BasicDetailsLayout";
 import StepTabs, { steps } from "../../components/ui/StepsTab";
 import { basicDetailsSchema } from "../../utils/yupValidation";
-import { OthersForm } from "../../components/screens";
+import {
+  CertificatesForm,
+  LandAndCropDetailsForm,
+  OthersForm,
+} from "../../components/screens";
 
 // global form type
 export interface CompleteFormData {
@@ -26,7 +30,7 @@ export interface CompleteFormData {
   govtSchemeProof?: File | null;
   farmerID?: File | null;
 
-  // 🌱 Farmer Detailss
+  // 🌱 Farmer Details
   preferredLanguage?: string;
   dob?: string;
   farmExperience?: number;
@@ -36,10 +40,13 @@ export interface CompleteFormData {
   fpoName?: string;
   registrationNumber?: string;
 
-  landSize?: string;
-
+  // Farm Details
   cropList?: string[];
-  availability?: string;
+  farmingType?: string;
+  landSize?: number;
+
+  //additional Details
+  certificates?: File[] | null;
 }
 
 const BasicDetails: React.FC = () => {
@@ -89,12 +96,18 @@ const BasicDetails: React.FC = () => {
 
     if (activeTab === "farmer") return <FarmerDetailsForm methods={methods} />;
 
-    if (activeTab === "farm") return <FarmDetailsForm methods={methods} />;
+    if (activeTab === "farm")
+      return <LandAndCropDetailsForm methods={methods} />;
 
     if (activeTab === "crop")
       return (
         <CropsAvailabilityForm methods={methods} activeSubTab={activeSubTab} />
       );
+
+    if (activeTab === "additional") {
+      if (activeSubTab === "certificates")
+        return <CertificatesForm methods={methods} />;
+    }
 
     return <div>Select a section</div>;
   };

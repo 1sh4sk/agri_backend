@@ -13,9 +13,15 @@ const OthersForm: React.FC<OthersFormProps> = ({ methods }) => {
         label="Upload Govt. Scheme Proof"
         name="govtSchemeProof"
         methods={methods}
+        accept="image/*"
       />
 
-      <FileUpload label="Upload Farmer ID" name="farmerID" methods={methods} />
+      <FileUpload
+        label="Upload Farmer ID"
+        name="farmerID"
+        methods={methods}
+        accept="image/*"
+      />
     </div>
   );
 };

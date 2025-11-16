@@ -13,3 +13,15 @@ export { default as Tick } from "./icons/tick.svg?react";
 // images
 export { default as ProfileCardBg } from "./profilecard-bg.png";
 export { default as StepBG } from "./step-bg.png";
+
+//vegetables
+export { default as Carrot } from "./vegetables/carrots.png";
+export { default as Corn } from "./vegetables/corn.png";
+export { default as GreenBroccoli } from "./vegetables/green-broccoli.png";
+export { default as MungBeans } from "./vegetables/mung-beans.png";
+export { default as Peas } from "./vegetables/peas.png";
+export { default as Potato } from "./vegetables/potato.png";
+export { default as Pumpkin } from "./vegetables/pumpkin.png";
+export { default as RedCabbage } from "./vegetables/red-cabbage.png";
+export { default as RedPepper } from "./vegetables/red-pepper.png";
+export { default as Tomato } from "./vegetables/tomato.png";

@@ -7,5 +7,6 @@ export const basicDetailsSchema = yup.object().shape({
     .matches(/^[0-9]{10}$/, "Mobile number must be 10 digits")
     .required("Mobile number is required"),
   location: yup.string().required("Location is required"),
+  farmingTypes: yup.string().optional(),
   referralCode: yup.string().optional(),
 });
