@@ -1,40 +1,40 @@
 /* Import Gilroy font from local files or Google Fonts alternative */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap");
 
 /* Gilroy font face declarations - add these files to your public/fonts folder */
 @font-face {
-  font-family: 'Gilroy';
-  src: url('/fonts/Gilroy-Regular.woff2') format('woff2'),
-       url('/fonts/Gilroy-Regular.woff') format('woff');
+  font-family: "Gilroy";
+  src: url("/fonts/Gilroy-Regular.woff2") format("woff2"),
+    url("/fonts/Gilroy-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Gilroy';
-  src: url('/fonts/Gilroy-Medium.woff2') format('woff2'),
-       url('/fonts/Gilroy-Medium.woff') format('woff');
+  font-family: "Gilroy";
+  src: url("/fonts/Gilroy-Medium.woff2") format("woff2"),
+    url("/fonts/Gilroy-Medium.woff") format("woff");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Gilroy';
-  src: url('/fonts/Gilroy-SemiBold.woff2') format('woff2'),
-       url('/fonts/Gilroy-SemiBold.woff') format('woff');
+  font-family: "Gilroy";
+  src: url("/fonts/Gilroy-SemiBold.woff2") format("woff2"),
+    url("/fonts/Gilroy-SemiBold.woff") format("woff");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Gilroy';
-  src: url('/fonts/Gilroy-Bold.woff2') format('woff2'),
-       url('/fonts/Gilroy-Bold.woff') format('woff');
+  font-family: "Gilroy";
+  src: url("/fonts/Gilroy-Bold.woff2") format("woff2"),
+    url("/fonts/Gilroy-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -47,12 +47,14 @@
 @layer base {
   body {
     @apply font-sans antialiased;
-    font-family: 'Gilroy', 'Inter', system-ui, sans-serif;
+    font-family: "Gilroy", "Inter", system-ui, sans-serif;
+    overflow-x: hidden;
   }
-  
+
   /* Better font stack for Indian languages */
   .font-indic {
-    font-family: 'Gilroy', 'Noto Sans Tamil', 'Noto Sans Malayalam', 'Inter', system-ui, sans-serif;
+    font-family: "Gilroy", "Noto Sans Tamil", "Noto Sans Malayalam", "Inter",
+      system-ui, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -130,15 +132,4 @@
 [lang="ml"] p,
 [lang="ml"] span {
   line-height: 1.6 !important;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
 }
