@@ -7,12 +7,10 @@ interface ProgressBarProps {
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
-  value = 20,
+  value = 0,
   height = "h-2",
   showLabel = false,
 }) => {
-  console.log(value);
-
   return (
     <div className="w-full">
       {showLabel && (

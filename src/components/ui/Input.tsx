@@ -34,39 +34,96 @@
 
 // Input.displayName = 'Input';
 
+// import { InputHTMLAttributes, forwardRef } from 'react';
 
-import { InputHTMLAttributes, forwardRef } from 'react';
+// interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+//   label?: string;
+//   error?: string;
+//   fullWidth?: boolean;
+// }
+
+// export const Input = forwardRef<HTMLInputElement, InputProps>(
+//   ({ label, error, fullWidth = true, className = '', ...props }, ref) => {
+//     const baseStyles = 'px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200';
+//     const errorStyles = error ? 'border-red-500 focus:ring-red-500' : '';
+//     const widthStyle = fullWidth ? 'w-full' : '';
+
+//     return (
+//       <div className={fullWidth ? 'w-full' : ''}>
+//         {label && (
+//           <label className="block text-sm font-medium text-gray-700 mb-2">
+//             {label}
+//           </label>
+//         )}
+//         <input
+//           ref={ref}
+//           className={`${baseStyles} ${errorStyles} ${widthStyle} ${className}`}
+//           {...props}
+//         />
+//         {error && (
+//           <p className="mt-1 text-sm text-red-500">{error}</p>
+//         )}
+//       </div>
+//     );
+//   }
+// );
+
+// Input.displayName = 'Input';
+
+// ---------------------- Input.tsx -------------------------
+import { InputHTMLAttributes, forwardRef } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   fullWidth?: boolean;
+  basicDetails?: boolean; // <---- optional style modifier
+  required?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, fullWidth = true, className = '', ...props }, ref) => {
-    const baseStyles = 'px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200';
-    const errorStyles = error ? 'border-red-500 focus:ring-red-500' : '';
-    const widthStyle = fullWidth ? 'w-full' : '';
+  (
+    {
+      label,
+      error,
+      fullWidth = true,
+      basicDetails = false,
+      className = "",
+      required = false,
+      ...props
+    },
+    ref
+  ) => {
+    const baseStyles =
+      "px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200";
+
+    const errorStyles = error ? "border-red-500 focus:ring-red-500" : "";
+    const widthStyle = fullWidth ? "w-full" : "";
+
+    // Extra styling only for Basic Details section (if needed)
+    const basicDetailsStyles = basicDetails
+      ? "bg-white shadow-sm  text-sm"
+      : "";
 
     return (
-      <div className={fullWidth ? 'w-full' : ''}>
+      <div className={fullWidth ? "w-full" : ""}>
         {label && (
           <label className="block text-sm font-medium text-gray-700 mb-2">
             {label}
+            {required && <span className="text-red-500"> *</span>}
           </label>
         )}
+
         <input
           ref={ref}
-          className={`${baseStyles} ${errorStyles} ${widthStyle} ${className}`}
+          className={`${baseStyles} ${errorStyles} ${widthStyle} ${basicDetailsStyles} ${className}`}
           {...props}
         />
-        {error && (
-          <p className="mt-1 text-sm text-red-500">{error}</p>
-        )}
+
+        {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
       </div>
     );
   }
 );
 
-Input.displayName = 'Input';
+Input.displayName = "Input";
