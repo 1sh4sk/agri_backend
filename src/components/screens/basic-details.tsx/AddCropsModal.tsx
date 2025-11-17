@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { X } from 'lucide-react';
-import { Input } from '../../ui/Input';
-import { SelectField } from '../../ui/Select';
-import { ImageUpload } from '../../ui/ImageUpload';
+import React, { useState } from "react";
+import { X } from "lucide-react";
+import { Input } from "../../ui/Input";
+import { SelectField } from "../../ui/Select";
+import { ImageUpload } from "../../ui/ImageUpload";
 
 interface AddCropsModalProps {
   isOpen: boolean;
@@ -20,33 +20,35 @@ export interface CropFormData {
   image?: File;
 }
 
-export const AddCropsModal: React.FC<AddCropsModalProps> = ({ 
-  isOpen, 
+export const AddCropsModal: React.FC<AddCropsModalProps> = ({
+  isOpen,
   onClose,
-  onSave 
+  onSave,
 }) => {
   const [formData, setFormData] = useState<CropFormData>({
-    cropName: '',
-    variety: '',
-    availability: 'Available',
-    quantity: '4',
-    harvestPeriod: '',
-    expectedPrice: ''
+    cropName: "",
+    variety: "",
+    availability: "Available",
+    quantity: "4",
+    harvestPeriod: "",
+    expectedPrice: "",
   });
 
-  const [errors, setErrors] = useState<Partial<Record<keyof CropFormData, string>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof CropFormData, string>>
+  >({});
 
   const validateForm = (): boolean => {
     const newErrors: Partial<Record<keyof CropFormData, string>> = {};
-    
+
     if (!formData.cropName.trim()) {
-      newErrors.cropName = 'Crop name is required';
+      newErrors.cropName = "Crop name is required";
     }
     if (!formData.variety) {
-      newErrors.variety = 'Variety is required';
+      newErrors.variety = "Variety is required";
     }
     if (!formData.harvestPeriod.trim()) {
-      newErrors.harvestPeriod = 'Harvest period is required';
+      newErrors.harvestPeriod = "Harvest period is required";
     }
 
     setErrors(newErrors);
@@ -58,7 +60,7 @@ export const AddCropsModal: React.FC<AddCropsModalProps> = ({
       if (onSave) {
         onSave(formData);
       }
-      console.log('Saving crop data:', formData);
+      console.log("Saving crop data:", formData);
       onClose();
     }
   };
@@ -73,13 +75,13 @@ export const AddCropsModal: React.FC<AddCropsModalProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg w-full max-w-[1000px] max-h-[95vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Add Crops</h2>
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+          <h2 className="text-lg font-semibold text-gray-900">Add Crops</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
           >
-            <X className="w-6 h-6" />
+            <X className="w-7 h-7 font-semibold" />
           </button>
         </div>
 
@@ -95,57 +97,66 @@ export const AddCropsModal: React.FC<AddCropsModalProps> = ({
               label="Crop Name"
               placeholder="Enter Your Full Name"
               value={formData.cropName}
-              onChange={(e) => setFormData({ ...formData, cropName: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, cropName: e.target.value })
+              }
               error={errors.cropName}
               required
             />
-            
+
             <SelectField
               label="Variety"
               value={formData.variety}
               onChange={(value) => setFormData({ ...formData, variety: value })}
-              options={['Type 1', 'Type 2', 'Type 3', 'Premium', 'Standard']}
+              options={["Type 1", "Type 2", "Type 3", "Premium", "Standard"]}
               placeholder="Select Variety"
               error={errors.variety}
               required
             />
-            
+
             <SelectField
               label="Availability"
               value={formData.availability}
-              onChange={(value) => setFormData({ ...formData, availability: value })}
-              options={['Available', 'Out of Stock', 'Coming Soon']}
+              onChange={(value) =>
+                setFormData({ ...formData, availability: value })
+              }
+              options={["Available", "Out of Stock", "Coming Soon"]}
               placeholder="Available"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Input
-            crop
-              
+              crop
               label="Available Quantity (Kgs)"
               type="number"
               value={formData.quantity}
-              onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, quantity: e.target.value })
+              }
             />
-            
+
             <Input
               crop
               label="Harvest Period"
               placeholder="Enter Harvest Period"
               value={formData.harvestPeriod}
-              onChange={(e) => setFormData({ ...formData, harvestPeriod: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, harvestPeriod: e.target.value })
+              }
               error={errors.harvestPeriod}
               required
             />
-            
+
             <Input
               crop
               label="Expected Price (Rs.)"
               placeholder="Enter Price"
               type="number"
               value={formData.expectedPrice}
-              onChange={(e) => setFormData({ ...formData, expectedPrice: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, expectedPrice: e.target.value })
+              }
             />
           </div>
         </div>

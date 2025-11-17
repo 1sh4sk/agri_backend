@@ -6,13 +6,15 @@ import BasicDetailsForm from "../../components/screens/basic-details.tsx/BasicDe
 import KYCForm from "../../components/screens/basic-details.tsx/KYCForm";
 import FarmerDetailsForm from "../../components/screens/basic-details.tsx/FarmerDetailsForm";
 // import FarmDetailsForm from "../../components/screens/basic-details.tsx/FarmDetailsForm";
-import CropsAvailabilityForm from "../../components/screens/basic-details.tsx/CropsAvailabilityForm";
+// import CropsAvailabilityForm from "../../components/screens/basic-details.tsx/CropsListForm";
 
 import BasicDetailsLayout from "../../components/layout/BasicDetailsLayout";
 import StepTabs, { steps } from "../../components/ui/StepsTab";
 import { basicDetailsSchema } from "../../utils/yupValidation";
 import {
   CertificatesForm,
+  CropsAvailabilityForm,
+  CropsListForm,
   LandAndCropDetailsForm,
   OthersForm,
 } from "../../components/screens";
@@ -99,10 +101,12 @@ const BasicDetails: React.FC = () => {
     if (activeTab === "farm")
       return <LandAndCropDetailsForm methods={methods} />;
 
-    if (activeTab === "crop")
-      return (
-        <CropsAvailabilityForm methods={methods} activeSubTab={activeSubTab} />
-      );
+    if (activeTab === "crop") {
+      if (activeSubTab === "croplist")
+        return <CropsListForm methods={methods} />;
+      if (activeSubTab === "availability")
+        return <CropsAvailabilityForm methods={methods} />;
+    }
 
     if (activeTab === "additional") {
       if (activeSubTab === "certificates")
