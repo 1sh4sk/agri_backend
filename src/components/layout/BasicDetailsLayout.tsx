@@ -4,6 +4,7 @@ import { LanguageSelector } from "../ui/LanguageSelector";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ProfileCard } from "../screens";
 import { ProgressBar } from "../ui";
+import { useNavigate } from "react-router-dom";
 
 interface BasicDetailsLayoutProps {
   children: React.ReactNode;
@@ -17,9 +18,14 @@ const BasicDetailsLayout: React.FC<BasicDetailsLayoutProps> = ({
   children,
   onPrev,
   onNext,
-  onSave,
+  // onSave,
   isFirstStep = false,
 }) => {
+  const naviagte = useNavigate()
+  const handleSave = () =>{
+    naviagte('/dashboard')
+    // onSave()
+  }
   return (
     <div className="w-screen min-h-screen bg-background flex p-6 gap-6 relative overflow-hidden mb-20">
       {/* Left section */}
@@ -58,7 +64,7 @@ const BasicDetailsLayout: React.FC<BasicDetailsLayoutProps> = ({
       <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 py-4 px-8 flex justify-between items-center shadow-[0_-2px_8px_rgba(0,0,0,0.05)] z-10">
         <div className="w-full flex justify-between gap-3 z-10">
           <button
-            onClick={onSave}
+            onClick={handleSave}
             className="w-[160px] px-6 py-2 border border-primary text-primary rounded-lg bg-transparent hover:bg-green-50 transition"
           >
             Save & Submit

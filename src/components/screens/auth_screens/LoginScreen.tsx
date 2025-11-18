@@ -1,23 +1,32 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '../ui/Button';
-import { Inputs } from '../ui/Inputs';
-import { AuthLayout } from '../layout/AuthLayout';
-import { createLoginSchema, LoginFormData } from '../validation/loginValidationSchema';
-import login from '../../assets/login.png';
+import { Button } from '../../ui/Button';
+import { Inputs } from '../../ui/Inputs';
+import { AuthLayout } from '../../layout/AuthLayout';
+import { createLoginSchema, LoginFormData } from '../../../utils/auth_validation/loginValidationSchema';
+import login from '../../../assets/login.png';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+// import authService from '../../services/auth.service';
+import { useAuth } from '../../../contexts/AuthContext';
 
 interface LoginScreenProps {
-  onSignup: () => void;
+  // onSignup: () => void;
   onSuccess: (data: LoginFormData) => void;
   onGuestContinue?: () => void;
 }
 
-export const LoginScreen = ({ onSignup, onSuccess, onGuestContinue }: LoginScreenProps) => {
+export const LoginScreen = ({ 
+  // onSignup,
+   onSuccess, onGuestContinue }: LoginScreenProps) => {
   const { t } = useTranslation();
   
+  const { login: loginApi, setIdentifier } = useAuth();
+  const navigate = useNavigate();
   const loginSchema = React.useMemo(() => createLoginSchema(t), [t]);
+
+    
 
   const {
     register,
@@ -36,18 +45,32 @@ export const LoginScreen = ({ onSignup, onSuccess, onGuestContinue }: LoginScree
   const [countryCode, setCountryCode] = React.useState('+91');
 
   // Watch form values to enable/disable submit button
-  const formValues = watch();
+   const formValues = watch();
   const hasAtLeastOneField = !!(formValues.email || formValues.mobile);
 
-  const onSubmit = async (data: LoginFormData) => {
-    try {
-      // Here you would typically make an API call to send OTP
-      console.log('Login data:', data);
-      onSuccess(data);
-    } catch (error) {
-      console.error('Login error:', error);
-    }
-  };
+// In LoginScreen.tsx, update the onSubmit function:
+const onSubmit = async (data: LoginFormData): Promise<void> => {
+  try {
+    // Determine identifier (email or phone)
+    const identifier = data.email || `${data.mobile}`;
+    
+    console.log('Sending login request for identifier:', identifier);
+
+    // Call the login API to send OTP
+    await loginApi(identifier);
+    
+    // Store identifier for OTP verification
+    setIdentifier(identifier);
+    
+    // Call the success callback
+    onSuccess(data);
+    
+    // Navigate to login OTP verification
+    navigate('/login-otp-verification');
+  } catch (error: unknown) {
+    console.error('Login error:', error instanceof Error ? error.message : 'Unknown error');
+  }
+};
 
   const handleCountryCodeChange = (code: string) => {
     setCountryCode(code);
@@ -60,6 +83,12 @@ export const LoginScreen = ({ onSignup, onSuccess, onGuestContinue }: LoginScree
       // Default guest behavior - proceed without role selection
       console.log('Continuing as guest');
     }
+  };
+  const handleSignupClick = () => {
+ 
+   navigate('/language-selection');
+    
+  
   };
 
   return (
@@ -135,7 +164,7 @@ export const LoginScreen = ({ onSignup, onSuccess, onGuestContinue }: LoginScree
           {t('noAccount')}{' '}
           <button 
             type="button" 
-            onClick={onSignup} 
+            onClick={handleSignupClick} 
             className="text-primary font-semibold underline hover:text-primary-600"
           >
             {t('signUp')}

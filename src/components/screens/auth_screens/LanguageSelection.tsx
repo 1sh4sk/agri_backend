@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { RadioCard } from '../ui/RadioCard';
-import { Button } from '../ui/Button';
+import { RadioCard } from '../../ui/RadioCard';
+import { Button } from '../../ui/Button';
 import { useTranslation } from 'react-i18next';
-import { LanguageCode } from '../../i18n';
-import { LogoWithContainer } from '../ui/Logo';
+import { LanguageCode } from '../../../i18n';
+import { LogoWithContainer } from '../../ui/Logo';
 
 const languages = [
   { code: 'hi' as LanguageCode, name: 'हिंदी', subtitle: 'source quality products, expand your networkand grow your agricultural business.' },

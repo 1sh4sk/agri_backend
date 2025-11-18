@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import  { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '../ui/Button';
-import { Inputs } from '../ui/Inputs';
-import { AuthLayout } from '../layout/AuthLayout';
-import { createSignupSchema, SignupFormData } from '../validation/signupSchema';
-import signUp from '../../assets/login.png';
+import { Button } from '../../ui/Button';
+import { Inputs } from '../../ui/Inputs';
+import { AuthLayout } from '../../layout/AuthLayout';
+import { createSignupSchema, SignupFormData } from '../../../utils/auth_validation/signupSchema';
+import signUp from '../../../assets/login.png';
 import { useTranslation } from 'react-i18next';
-
+import { useAuth } from '../../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 interface SignUpScreenProps {
   onLogin: () => void;
   onSuccess: (data: SignupFormData) => void;
@@ -17,7 +18,8 @@ interface SignUpScreenProps {
 export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScreenProps) => {
   const { t } = useTranslation();
   const [countryCode, setCountryCode] = useState('+91');
-
+  const { signup, role, language, setIdentifier } = useAuth();
+  const navigate = useNavigate();
   const signupSchema = createSignupSchema(t);
 
   const {
@@ -34,20 +36,84 @@ export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScre
     },
   });
 
-  const onSubmit = (data: SignupFormData) => {
-    // Add country code to the data
-    const formData = { ...data, countryCode };
-    onSuccess(formData);
+  // Function to convert language code to lowercase for API
+  const getLanguageForAPI = (code: string): string => {
+    const languageMap: { [key: string]: string } = {
+      'en': 'english',
+      'hi': 'hindi', 
+      'bn': 'bengali',
+      'mr': 'marathi',
+      'gu': 'gujarati',
+      'ta': 'tamil',
+      'te': 'telugu',
+      'ml': 'malayalam',
+      'pa': 'punjabi',
+      'or': 'odia'
+    };
+    return languageMap[code] || 'english';
   };
 
-  const handleGuestContinue = () => {
+  // Function to convert role for API
+  const getRoleForAPI = (roleCode: string): string => {
+    const roleMap: { [key: string]: string } = {
+      'farmer': 'former',
+      'business': 'business',
+      'professional': 'individual', 
+      'government': 'government'
+    };
+    return roleMap[roleCode] || 'former';
+  };
+
+  const onSubmit = async (data: SignupFormData): Promise<void> => {
+    try {
+      if (!role || !language) {
+        return;
+      }
+
+      // Convert role and language for API
+      const apiRole = getRoleForAPI(role);
+      const apiLanguage = getLanguageForAPI(language);
+
+      const signupData = {
+        userName: data.fullName,
+        email: data.email,
+        phoneNumber: data.mobile,
+        role: apiRole,
+        language: apiLanguage,
+      };
+
+      console.log('Sending signup data to API:', signupData);
+
+      // Call the signup API with the converted data
+      await signup(signupData.userName, signupData.email, signupData.phoneNumber, apiRole, apiLanguage);
+      
+      // Set identifier for OTP verification
+      setIdentifier(signupData.phoneNumber);
+      
+      // Call the success callback
+      onSuccess(data);
+      navigate('/otp-verification');
+    } catch (error: unknown) {
+      console.error('Signup error:', error instanceof Error ? error.message : 'Unknown error');
+    }
+  };
+
+  const handleGuestContinue = (): void => {
     if (onGuestContinue) {
       onGuestContinue();
     } else {
-      // Default guest behavior - proceed without role selection
       console.log('Continuing as guest');
     }
   };
+
+  const handleLoginClick = (): void => {
+    if (onLogin) {
+      onLogin();
+    } else {
+      navigate('/login');
+    }
+  };
+
 
   return (
     <AuthLayout 
@@ -74,6 +140,7 @@ export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScre
             name="fullName"
             error={errors.fullName}
             fullWidth
+              disabled={isSubmitting}
           />
 
           <Inputs
@@ -84,6 +151,7 @@ export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScre
             name="email"
             error={errors.email}
             fullWidth
+              disabled={isSubmitting}
           />
 
           <Inputs
@@ -97,6 +165,7 @@ export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScre
             withCountryCode
             countryCode={countryCode}
             onCountryCodeChange={setCountryCode}
+              disabled={isSubmitting}
           />
 
           <div className='mt-10'>
@@ -104,7 +173,7 @@ export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScre
               type="submit"
               variant="primary"
               fullWidth
-              disabled={isSubmitting}
+              disabled={isSubmitting || !language || !role}
               className="mt-6 bg-primary hover:bg-primary-600 disabled:opacity-50 text-white font-medium py-3 rounded-[4px]"
             >
               {isSubmitting ? t('processing') : t('getOTP')}
@@ -116,8 +185,9 @@ export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScre
           {t('alreadyAccount')}{' '}
           <button 
             type="button" 
-            onClick={onLogin} 
+            onClick={handleLoginClick} 
             className="text-primary font-semibold underline hover:text-primary-600"
+              disabled={isSubmitting}
           >
             {t('login')}
           </button>

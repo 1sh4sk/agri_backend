@@ -1,7 +1,7 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { Input } from "../../ui/Input";
-import { CompleteFormData } from "../../../pages/basic-details.tsx/BasicDetails";
+import { CompleteFormData } from "../../../pages/basic-details/BasicDetails";
 import SelectField from "../../ui/SelectField";
 
 const locations = ["Chennai", "Coimbatore", "Madurai"];
