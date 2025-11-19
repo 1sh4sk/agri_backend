@@ -1,254 +1,3 @@
-// // // // ✔ Accept single image
-// // // {
-// // //   /* <FileUpload
-// // //   label="Upload Profile Photo"
-// // //   name="profilePhoto"
-// // //   methods={methods}
-// // //   accept="image/*"
-// // // /> */
-// // // }
-
-// // // // ✔ Accept multiple PDFs
-// // // {
-// // //   /* <FileUpload
-// // //   label="Upload Certificates"
-// // //   name="certificates"
-// // //   methods={methods}
-// // //   multiple
-// // //   accept="application/pdf"
-// // // /> */
-// // // }
-
-// // // // ✔ Accept any file
-// // // {
-// // //   /* <FileUpload
-// // //   label="Upload Document"
-// // //   name="document"
-// // //   methods={methods}
-// // // /> */
-// // // }
-
-// // import React, { useState } from "react";
-// // import { Upload, FileText } from "lucide-react";
-// // import { UseFormReturn } from "react-hook-form";
-
-// // interface FileUploadProps {
-// //   label: string;
-// //   name: string;
-// //   methods: UseFormReturn<any>;
-// //   multiple?: boolean;
-// //   accept?: string;
-// // }
-
-// // const FileUpload: React.FC<FileUploadProps> = ({
-// //   label,
-// //   name,
-// //   methods,
-// //   multiple = false,
-// //   accept = "*",
-// // }) => {
-// //   const [previewFiles, setPreviewFiles] = useState<File[]>([]);
-
-// //   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-// //     const fileList = e.target.files;
-// //     if (!fileList) return;
-
-// //     const files = multiple ? Array.from(fileList) : [fileList[0]];
-
-// //     setPreviewFiles(files);
-
-// //     // Set value in RHF correctly
-// //     methods.setValue(name, multiple ? files : files[0], {
-// //       shouldValidate: true,
-// //       shouldDirty: true,
-// //     });
-// //   };
-
-// //   return (
-// //     <div className="flex flex-col gap-6">
-// //       {/* Upload Box */}
-// //       <div className="w-full border border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center text-center gap-4 min-h-[180px]">
-// //         <p className="text-gray-500 text-sm">
-// //           Choose a file or drag & drop it here
-// //         </p>
-
-// //         <button
-// //           type="button"
-// //           className="px-4 py-2 border rounded-md bg-white shadow-sm flex items-center gap-2 text-sm cursor-pointer"
-// //           onClick={() => document.getElementById(name)?.click()}
-// //         >
-// //           <Upload size={16} />
-// //           {label}
-// //         </button>
-
-// //         {/* Hidden file input */}
-// //         <input
-// //           id={name}
-// //           type="file"
-// //           accept={accept}
-// //           multiple={multiple}
-// //           className="hidden"
-// //           {...methods.register(name)}
-// //           onChange={handleFileChange}
-// //         />
-// //       </div>
-
-// //       {/* Preview Section */}
-// //       {previewFiles.length > 0 && (
-// //         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-// //           {previewFiles.map((file, index) => {
-// //             const isImage = file.type.startsWith("image/");
-// //             const fileURL = URL.createObjectURL(file);
-
-// //             return (
-// //               <div
-// //                 key={index}
-// //                 className="border rounded-xl p-3 bg-white shadow-sm flex flex-col gap-2"
-// //               >
-// //                 {isImage ? (
-// //                   <img
-// //                     src={fileURL}
-// //                     className="w-full h-24 object-cover rounded-md"
-// //                   />
-// //                 ) : (
-// //                   <div className="flex items-center gap-3">
-// //                     <FileText size={28} className="text-red-500" />
-// //                     <div className="flex flex-col">
-// //                       <span className="text-sm font-medium truncate max-w-[150px]">
-// //                         {file.name}
-// //                       </span>
-// //                       <span className="text-xs text-gray-500">
-// //                         {(file.size / 1024 / 1024).toFixed(1)}MB
-// //                       </span>
-// //                     </div>
-// //                   </div>
-// //                 )}
-// //               </div>
-// //             );
-// //           })}
-// //         </div>
-// //       )}
-// //     </div>
-// //   );
-// // };
-
-// // export default FileUpload;
-
-// import React, { useState } from "react";
-// import { Upload, FileText } from "lucide-react";
-// import { UseFormReturn } from "react-hook-form";
-
-// interface FileUploadProps {
-//   label: string;
-//   name: string;
-//   methods: UseFormReturn<any>;
-//   multiple?: boolean;
-//   accept?: string;
-// }
-
-// const FileUpload: React.FC<FileUploadProps> = ({
-//   label,
-//   name,
-//   methods,
-//   multiple = false,
-//   accept = "*",
-// }) => {
-//   const [previewFiles, setPreviewFiles] = useState<File[]>([]);
-//   const { register, setValue, trigger } = methods;
-
-//   // Register the field first
-//   const { ref, ...rest } = register(name);
-
-//   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const fileList = e.target.files;
-//     if (!fileList) return;
-
-//     const files = multiple ? Array.from(fileList) : [fileList[0]];
-
-//     setPreviewFiles(files);
-
-//     // Set value in RHF and trigger validation
-//     setValue(name, multiple ? files : files[0], {
-//       shouldValidate: true,
-//       shouldDirty: true,
-//     });
-
-//     // Trigger validation immediately
-//     await trigger(name);
-//   };
-
-//   return (
-//     <div className="flex flex-col gap-6">
-//       {/* Upload Box */}
-//       <div className="w-full border border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center text-center gap-4 min-h-[180px]">
-//         <p className="text-gray-500 text-sm">
-//           Choose a file or drag & drop it here
-//         </p>
-
-//         <button
-//           type="button"
-//           className="px-4 py-2 border rounded-md bg-white shadow-sm flex items-center gap-2 text-sm cursor-pointer"
-//           onClick={() => document.getElementById(name)?.click()}
-//         >
-//           <Upload size={16} />
-//           {label}
-//         </button>
-
-//         {/* Hidden file input */}
-//         <input
-//           id={name}
-//           type="file"
-//           accept={accept}
-//           multiple={multiple}
-//           className="hidden"
-//           {...rest}
-//           ref={ref}
-//           onChange={handleFileChange}
-//         />
-//       </div>
-
-//       {/* Preview Section */}
-//       {previewFiles.length > 0 && (
-//         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-//           {previewFiles.map((file, index) => {
-//             const isImage = file.type.startsWith("image/");
-//             const fileURL = URL.createObjectURL(file);
-
-//             return (
-//               <div
-//                 key={index}
-//                 className="border rounded-xl p-3 bg-white shadow-sm flex flex-col gap-2"
-//               >
-//                 {isImage ? (
-//                   <img
-//                     src={fileURL}
-//                     className="w-full h-24 object-cover rounded-md"
-//                     alt={file.name}
-//                   />
-//                 ) : (
-//                   <div className="flex items-center gap-3">
-//                     <FileText size={28} className="text-red-500" />
-//                     <div className="flex flex-col">
-//                       <span className="text-sm font-medium truncate max-w-[150px]">
-//                         {file.name}
-//                       </span>
-//                       <span className="text-xs text-gray-500">
-//                         {(file.size / 1024 / 1024).toFixed(1)}MB
-//                       </span>
-//                     </div>
-//                   </div>
-//                 )}
-//               </div>
-//             );
-//           })}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default FileUpload;
-
 import React, { useState } from "react";
 import { Upload, FileText, AlertCircle } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
@@ -317,7 +66,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
     <div className="flex flex-col gap-4">
       {/* Upload Box with Error State */}
       <div
-        className={`w-full border border-dashed rounded-xl p-6 flex flex-col items-center text-center gap-4 min-h-[180px] transition-colors ${
+        className={`w-full bg-white border border-dashed rounded-xl p-6 flex flex-col justify-center items-center text-center gap-4 min-h-[180px] transition-colors ${
           error
             ? "border-red-300 bg-red-50"
             : "border-gray-300 hover:border-gray-400"
@@ -329,7 +78,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
         <button
           type="button"
-          className={`px-4 py-2 border rounded-md shadow-sm flex items-center gap-2 text-sm cursor-pointer transition-colors ${
+          className={`px-4 py-2 border rounded-md shadow-sm flex items-center justify-center gap-2 text-sm cursor-pointer transition-colors ${
             error
               ? "border-red-300 bg-red-100 text-red-700 hover:bg-red-200"
               : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
@@ -430,13 +179,14 @@ const FileUpload: React.FC<FileUploadProps> = ({
       {/* Helper Text */}
       {!error && accept.includes("pdf") && (
         <p className="text-xs text-gray-500">
-          📄 Only PDF files are allowed. Maximum file size: 5MB per file.
+          <span className="text-red-600">*</span> Only PDF files are allowed.
+          Maximum file size: 5MB per file.
         </p>
       )}
 
       {!error && accept.includes("image") && (
         <p className="text-xs text-gray-500">
-          🖼️ Only image files are allowed.
+          <span className="text-red-600">*</span> Only image files are allowed.
         </p>
       )}
     </div>

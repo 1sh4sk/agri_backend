@@ -1,10 +1,15 @@
-export { default as BasicDetailsForm } from "./basic-details.tsx/BasicDetailsForm";
-export { default as FarmerDetailsForm } from "./basic-details.tsx/FarmerDetailsForm";
-export { default as KYCForm } from "./basic-details.tsx/KYCForm";
-export { default as ProfileCard } from "./basic-details.tsx/ProfileCard";
-export { default as OthersForm } from "./basic-details.tsx/OthersForm";
-export { default as CertificatesForm } from "./basic-details.tsx/CertificatesForm";
-export { default as LandAndCropDetailsForm } from "./basic-details.tsx/LandAndCropDetailsForm";
-export { default as CropsSearchSelector } from "./basic-details.tsx/CropsSearchSelector";
-export { default as CropsListForm } from "./basic-details.tsx/CropsListForm";
-export { default as CropsAvailabilityForm } from "./basic-details.tsx/CropsAvailabilityForm";
+//farmer screens
+export { default as BasicDetailsForm } from "./farmer_basic_details/BasicDetailsForm";
+export { default as FarmerDetailsForm } from "./farmer_basic_details/FarmerDetailsForm";
+export { default as KYCForm } from "./farmer_basic_details/KYCForm";
+export { default as ProfileCard } from "./farmer_basic_details/ProfileCard";
+export { default as OthersForm } from "./farmer_basic_details/OthersForm";
+export { default as CertificatesForm } from "./farmer_basic_details/CertificatesForm";
+export { default as LandAndCropDetailsForm } from "./farmer_basic_details/LandAndCropDetailsForm";
+export { default as CropsSearchSelector } from "./farmer_basic_details/CropsSearchSelector";
+export { default as CropsListForm } from "./farmer_basic_details/CropsListForm";
+export { default as CropsAvailabilityForm } from "./farmer_basic_details/CropsAvailabilityForm";
+
+//individual screens
+export { default as IndividualBasicDetailsForm } from "./individual_basic_details/BasicDetailsForm";
+export { default as IndividualOthersForm } from "./individual_basic_details/OthersForm";

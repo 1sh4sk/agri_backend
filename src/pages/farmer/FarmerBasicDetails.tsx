@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 // component imports
 import BasicDetailsLayout from "../../components/layout/BasicDetailsLayout";
-import StepTabs, { steps } from "../../components/ui/StepsTab";
+import StepTabs from "../../components/ui/StepsTab";
 import {
   BasicDetailsForm,
   CertificatesForm,
@@ -16,11 +16,12 @@ import {
   OthersForm,
 } from "../../components/screens";
 import { schemaMap } from "../../utils/yupValidation";
+import { FarmerSteps } from "../../constants/BasicDetailsSteps";
 
 const BasicDetails: React.FC = () => {
   const [activeTab, setActiveTab] = useState("basic");
 
-  const activeStep = steps.find((s) => s.id === activeTab);
+  const activeStep = FarmerSteps.find((s) => s.id === activeTab);
   const [activeSubTab, setActiveSubTab] = useState(
     activeStep?.subTabs?.[0]?.id || ""
   );
@@ -29,15 +30,15 @@ const BasicDetails: React.FC = () => {
     setActiveSubTab(activeStep?.subTabs?.[0]?.id || "");
   }, [activeTab]);
 
-  const currentIndex = steps.findIndex((s) => s.id === activeTab);
+  const currentIndex = FarmerSteps.findIndex((s) => s.id === activeTab);
 
   const onNext = () => {
-    if (currentIndex < steps.length - 1)
-      setActiveTab(steps[currentIndex + 1].id);
+    if (currentIndex < FarmerSteps.length - 1)
+      setActiveTab(FarmerSteps[currentIndex + 1].id);
   };
 
   const onPrev = () => {
-    if (currentIndex > 0) setActiveTab(steps[currentIndex - 1].id);
+    if (currentIndex > 0) setActiveTab(FarmerSteps[currentIndex - 1].id);
   };
 
   // get current yup schema
@@ -138,6 +139,7 @@ const BasicDetails: React.FC = () => {
       >
         <div className="w-full h-full py-4">
           <StepTabs
+            steps={FarmerSteps}
             activeTab={activeTab}
             onTabChange={setActiveTab}
             completedTabs={["basic", "kyc"]}
@@ -160,7 +162,7 @@ const BasicDetails: React.FC = () => {
             ))}
           </div>
 
-          <div className="overflow-y-scrollpb-40 "> {renderForm()}</div>
+          <div className="overflow-y-scroll pb-40 "> {renderForm()}</div>
         </div>
       </BasicDetailsLayout>
     </FormProvider>

@@ -8,7 +8,8 @@ export { default as Profile } from "./icons/profile.svg?react";
 export { default as Credits } from "./icons/credits.svg?react";
 export { default as ProfileIcon } from "./icons/profile-icon.svg?react";
 export { default as Tick } from "./icons/tick.svg?react";
-// export { default as StepBG } from "./icons/step-bg.svg";
+export { default as Book } from "./icons/book.svg?react";
+export { default as Suitcase } from "./icons/suitcase.svg?react";
 
 // images
 export { default as ProfileCardBg } from "./profilecard-bg.png";

@@ -80,6 +80,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   basicDetails?: boolean; // <---- optional style modifier
   required?: boolean;
   crop?: boolean;
+  type?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -92,6 +93,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       crop = false,
       className = "",
       required = false,
+      type,
       ...props
     },
     ref
@@ -106,8 +108,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const basicDetailsStyles = basicDetails
       ? "bg-white shadow-sm  text-sm"
       : "";
-      const cropStyle  = crop ?  "bg-white w-[300px] h-[40px] rounded-[8px] border-[1px] text-[14px] shadow-sm "
+    const cropStyle = crop
+      ? "bg-white w-[300px] h-[40px] rounded-[8px] border-[1px] text-[14px] shadow-sm "
       : "";
+
+    // Specific styling for date inputs
+    const dateStyles = type === "date" ? "py-[10px] text-sm" : "";
 
     return (
       <div className={fullWidth ? "w-full" : ""}>
@@ -119,8 +125,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
 
         <input
+          type={type}
           ref={ref}
-          className={`${baseStyles} ${errorStyles} ${widthStyle} ${basicDetailsStyles} ${cropStyle} ${className}`}
+          className={`${baseStyles}  ${errorStyles} ${widthStyle} ${basicDetailsStyles} ${cropStyle} ${className} ${dateStyles}`}
           {...props}
         />
 

@@ -73,8 +73,6 @@
 
 // // export default App;
 
-
-
 // // // import { useState, useEffect } from 'react';
 // // // import { LanguageSelection } from './pages/LanguageSelection';
 // // // import { RoleSelection } from './pages/RoleSelection';
@@ -173,7 +171,6 @@
 // // // }
 
 // // // export default App;
-
 
 // import { useState, useEffect } from 'react';
 // import { LanguageSelection } from './components/screens/LanguageSelection';
@@ -277,8 +274,6 @@
 //   //   }
 //   // };
 
-
-  
 //   const renderStep = () => {
 //     switch (currentStep) {
 //       case 'language':
@@ -335,24 +330,45 @@
 // export default App;
 
 // src/App.tsx
-import { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import ErrorBoundary from './components/ErrorBoundary';
-import LoadingFallback from './components/LoadingFallBack';
-import ProtectedRoute from './components/ProtectedRoute';
-import PublicRoute from '../src/routes/PublicRoute';
-import FormerDashboard from './components/screens/dashboard/farmer_dashboard/FormerDashboard';
+import { Suspense, lazy } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import ErrorBoundary from "./components/ErrorBoundary";
+import LoadingFallback from "./components/LoadingFallBack";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "../src/routes/PublicRoute";
+import FormerDashboard from "./components/screens/dashboard/farmer_dashboard/FormerDashboard";
+import { FarmerBasicDetails, IndividualBasicDetails } from "./pages";
 
 // Lazy load screens with proper default exports
-const LoginScreen = lazy(() => import('./components/screens/auth_screens/LoginScreen').then(module => ({ default: module.LoginScreen })));
-const LanguageSelection = lazy(() => import('./components/screens/auth_screens/LanguageSelection').then(module => ({ default: module.LanguageSelection })));
-const RoleSelectionScreen = lazy(() => import('./components/screens/auth_screens/RoleSelectionScreen').then(module => ({ default: module.RoleSelectionScreen })));
-const SignUpScreen = lazy(() => import('./components/screens/auth_screens/SignUpScreen').then(module => ({ default: module.SignUpScreen })));
-const OTPVerificationScreen = lazy(() => import('./components/screens/auth_screens/OTPVerificationScreen').then(module => ({ default: module.OTPVerificationScreen })));
+const LoginScreen = lazy(() =>
+  import("./components/screens/auth_screens/LoginScreen").then((module) => ({
+    default: module.LoginScreen,
+  }))
+);
+const LanguageSelection = lazy(() =>
+  import("./components/screens/auth_screens/LanguageSelection").then(
+    (module) => ({ default: module.LanguageSelection })
+  )
+);
+const RoleSelectionScreen = lazy(() =>
+  import("./components/screens/auth_screens/RoleSelectionScreen").then(
+    (module) => ({ default: module.RoleSelectionScreen })
+  )
+);
+const SignUpScreen = lazy(() =>
+  import("./components/screens/auth_screens/SignUpScreen").then((module) => ({
+    default: module.SignUpScreen,
+  }))
+);
+const OTPVerificationScreen = lazy(() =>
+  import("./components/screens/auth_screens/OTPVerificationScreen").then(
+    (module) => ({ default: module.OTPVerificationScreen })
+  )
+);
 
 // Lazy load pages - using simple imports assuming they have default exports
-const BasicDetails = lazy(() => import('./pages/basic-details/BasicDetails'));
+const BasicDetails = lazy(() => import("./pages/farmer/FarmerBasicDetails"));
 // const RoleBasedDashboard = lazy(() => import('./pages/RoleBasedDashboard').then(module => ({ default: module.RoleBasedDashboard })));
 
 function App() {
@@ -364,17 +380,16 @@ function App() {
             <Routes>
               {/* Default redirect */}
               <Route path="/" element={<Navigate to="/login" replace />} />
-
               {/* Public routes - redirect to dashboard if authenticated */}
               <Route
                 path="/login"
                 element={
                   <PublicRoute>
-                      {/* <BasicDetails />
+                    {/* <BasicDetails />
                       <FormerDashboard />  */}
-                    <LoginScreen 
-                      // onSignup={() => window.location.href = '/'}
-                      // onSuccess={}
+                    <LoginScreen
+                    // onSignup={() => window.location.href = '/'}
+                    // onSuccess={}
                     />
                   </PublicRoute>
                 }
@@ -383,8 +398,8 @@ function App() {
                 path="/language-selection"
                 element={
                   <PublicRoute>
-                    <LanguageSelection 
-                    // onComplete={() => window.location.href = '/role-selection'} 
+                    <LanguageSelection
+                    // onComplete={() => window.location.href = '/role-selection'}
                     />
                   </PublicRoute>
                 }
@@ -395,7 +410,7 @@ function App() {
                   <PublicRoute>
                     <RoleSelectionScreen
                     //  onNext={() => window.location.href = '/signup'}
-                      />
+                    />
                   </PublicRoute>
                 }
               />
@@ -403,51 +418,52 @@ function App() {
                 path="/signup"
                 element={
                   <PublicRoute>
-                    <SignUpScreen 
-                      // onLogin={() => window.location.href = '/login'}
-                      // onSuccess={() => window.location.href = '/otp-verification'}
+                    <SignUpScreen
+                    // onLogin={() => window.location.href = '/login'}
+                    // onSuccess={() => window.location.href = '/otp-verification'}
                     />
                   </PublicRoute>
                 }
               />
-              // In your App.tsx, update the OTP verification routes:
-
-// For registration flow (from signup)
-<Route
-  path="/otp-verification"
-  element={
-    <PublicRoute>
-      <OTPVerificationScreen 
-        // onSuccess={() => console.log('Registration OTP verified')}
-      //  onBack={() => window.history.back()}
-        // isLoginFlow={false} // Registration flow
-      />
-    </PublicRoute>
-  }
-/>
-
-// For login flow (from login)
-<Route
-  path="/login-otp-verification"
-  element={
-    <PublicRoute>
-      <OTPVerificationScreen 
-        // onSuccess={() => console.log('Login OTP verified')}
-      // onBack={() => window.history.back()}
-        // isLoginFlow={true} // Login flow
-      />
-    </PublicRoute>
-  }
-/>
-
+              // In your App.tsx, update the OTP verification routes: // For
+              registration flow (from signup)
+              <Route
+                path="/otp-verification"
+                element={
+                  <PublicRoute>
+                    <OTPVerificationScreen
+                    // onSuccess={() => console.log('Registration OTP verified')}
+                    //  onBack={() => window.history.back()}
+                    // isLoginFlow={false} // Registration flow
+                    />
+                  </PublicRoute>
+                }
+              />
+              // For login flow (from login)
+              <Route
+                path="/login-otp-verification"
+                element={
+                  <PublicRoute>
+                    <OTPVerificationScreen
+                    // onSuccess={() => console.log('Login OTP verified')}
+                    // onBack={() => window.history.back()}
+                    // isLoginFlow={true} // Login flow
+                    />
+                  </PublicRoute>
+                }
+              />
               {/* Protected routes - require authentication */}
               <Route
                 path="/basic-details"
                 element={
                   <ProtectedRoute>
-                    <BasicDetails />
+                    <FarmerBasicDetails />
                   </ProtectedRoute>
                 }
+              />
+              <Route
+                path="/individual-details"
+                element={<IndividualBasicDetails />}
               />
               <Route
                 path="/dashboard"
@@ -455,11 +471,10 @@ function App() {
                   <ProtectedRoute>
                     {/* <RoleBasedDashboard /> */}
                     {/* <BasicDetails /> */}
-                    <FormerDashboard /> 
+                    <FormerDashboard />
                   </ProtectedRoute>
                 }
               />
-
               {/* Catch all - redirect to login */}
               <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
