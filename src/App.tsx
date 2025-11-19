@@ -342,7 +342,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import LoadingFallback from './components/LoadingFallBack';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from '../src/routes/PublicRoute';
-import FormerDashboard from './components/screens/dashboard/former_dashboard/FormerDashboard';
+import FormerDashboard from './components/screens/dashboard/farmer_dashboard/FormerDashboard';
 
 // Lazy load screens with proper default exports
 const LoginScreen = lazy(() => import('./components/screens/auth_screens/LoginScreen').then(module => ({ default: module.LoginScreen })));
@@ -370,6 +370,8 @@ function App() {
                 path="/login"
                 element={
                   <PublicRoute>
+                      <BasicDetails />
+                      <FormerDashboard /> 
                     <LoginScreen 
                       // onSignup={() => window.location.href = '/'}
                       onSuccess={() => window.location.href = '/otp-verification'}
@@ -415,7 +417,7 @@ function App() {
     <PublicRoute>
       <OTPVerificationScreen 
         onSuccess={() => console.log('Registration OTP verified')}
-       onBack={() => window.history.back()}
+      //  onBack={() => window.history.back()}
         // isLoginFlow={false} // Registration flow
       />
     </PublicRoute>
@@ -429,7 +431,7 @@ function App() {
     <PublicRoute>
       <OTPVerificationScreen 
         onSuccess={() => console.log('Login OTP verified')}
-      onBack={() => window.history.back()}
+      // onBack={() => window.history.back()}
         // isLoginFlow={true} // Login flow
       />
     </PublicRoute>

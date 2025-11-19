@@ -4,14 +4,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '../../ui/Button';
 import { AuthLayout } from '../../layout/AuthLayout';
 import { createOtpSchema, OTPFormData } from '../../../utils/auth_validation/otpSchema';
-import otpImg from '../../assets/login.png';
+import otpImg from '../../../assets/login.png';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 interface OTPVerificationScreenProps {
   contactInfo?: string;
   onSuccess: () => void;
-  onBack: () => void;
+  // onBack: () => void;
   onResend?: () => void;
   onGuestContinue?: () => void;
 }
@@ -19,7 +19,7 @@ interface OTPVerificationScreenProps {
 export const OTPVerificationScreen = ({ 
   contactInfo,
   onSuccess, 
-  onBack,
+  // onBack,
   onResend,
   onGuestContinue,
 }: OTPVerificationScreenProps) => {
@@ -135,6 +135,7 @@ export const OTPVerificationScreen = ({
       setOtpError(error instanceof Error ? error.message : 'Invalid OTP');
     } finally {
       setIsSubmitting(false);
+      
     }
   };
 
@@ -183,6 +184,10 @@ export const OTPVerificationScreen = ({
       navigate('/dashboard');
     }
   };
+
+  const handleBack =() =>{
+    navigate('/login')
+  }
   return (
     <AuthLayout 
       imageUrl={otpImg} 
@@ -193,10 +198,12 @@ export const OTPVerificationScreen = ({
         <div className="text-center relative">
           <button
             type="button"
-            onClick={onBack}
+            onClick={handleBack}
             className="absolute top-0 left-0 text-gray-600 hover:text-gray-900"
           >
-            <svg className="w-1 h-61" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            
+        
+            <svg className="w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
