@@ -24,10 +24,15 @@ const DUMMY_CROPS = [
   },
 ];
 
-// ==================== CropsPage Component ====================
-const CropsPage: React.FC = () => {
+interface CropsListFormProps {
+  methods: any; // or UseFormReturn<CompleteFormData>
+}
+
+const CropsListForm: React.FC<CropsListFormProps> = ({ methods }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [crops, setCrops] = useState(DUMMY_CROPS);
+  // const [crops, setCrops] = useState(DUMMY_CROPS);
+  const { watch, setValue } = methods;
+  const crops = watch("crops") || [];
 
   const handleSaveCrop = (data: CropFormData) => {
     const newCrop = {
@@ -39,8 +44,12 @@ const CropsPage: React.FC = () => {
       availability: data.availability,
       quantity: data.quantity,
     };
-    setCrops([...crops, newCrop]);
+    // setCrops([...crops, newCrop]);
+    const updated = [...crops, newCrop];
+    setValue("crops", updated, { shouldValidate: true });
   };
+
+  console.log("Current crops in RHF:", crops);
 
   return (
     <div className="max-w-7xl mx-auto rounded-md border">
@@ -169,4 +178,4 @@ const CropsPage: React.FC = () => {
   );
 };
 
-export default CropsPage;
+export default CropsListForm;

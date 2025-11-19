@@ -9,7 +9,8 @@ interface BasicDetailsLayoutProps {
   children: React.ReactNode;
   onPrev?: () => void;
   onNext?: () => void;
-  onSave?: () => void;
+  // onSave?: () => void;
+  onSubmit?: () => void;
   isFirstStep?: boolean;
 }
 
@@ -17,13 +18,13 @@ const BasicDetailsLayout: React.FC<BasicDetailsLayoutProps> = ({
   children,
   onPrev,
   onNext,
-  onSave,
+  onSubmit,
   isFirstStep = false,
 }) => {
   return (
-    <div className="w-screen min-h-screen bg-background flex p-6 gap-6 relative overflow-hidden mb-20">
+    <div className="w-screen max-h-screen bg-background flex p-6 gap-6 relative overflow-hidden">
       {/* Left section */}
-      <div className="w-[80%] flex flex-col">
+      <div className="w-[80%] h-full  flex flex-col">
         {/* Header */}
         <div className="flex gap-4">
           <LogoWithContainer />
@@ -50,7 +51,7 @@ const BasicDetailsLayout: React.FC<BasicDetailsLayoutProps> = ({
       </div>
 
       {/* Right Side - Profile Section Placeholder */}
-      <div className="flex-1">
+      <div className="flex-1 overflow-y-scroll ">
         <ProfileCard />
       </div>
 
@@ -58,7 +59,8 @@ const BasicDetailsLayout: React.FC<BasicDetailsLayoutProps> = ({
       <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 py-4 px-8 flex justify-between items-center shadow-[0_-2px_8px_rgba(0,0,0,0.05)] z-10">
         <div className="w-full flex justify-between gap-3 z-10">
           <button
-            onClick={onSave}
+            type="submit"
+            onClick={onSubmit}
             className="w-[160px] px-6 py-2 border border-primary text-primary rounded-lg bg-transparent hover:bg-green-50 transition"
           >
             Save & Submit

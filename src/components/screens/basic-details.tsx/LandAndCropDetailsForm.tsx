@@ -48,7 +48,7 @@ const LandAndCropDetailsForm: React.FC<LandAndCropDetailsFormProps> = ({
         <SelectField
           required
           label="Type of Farming"
-          name="FarmingType"
+          name="farmingType"
           register={register}
           options={farmTypes}
         />

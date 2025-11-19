@@ -2,54 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import BasicDetailsForm from "../../components/screens/basic-details.tsx/BasicDetailsForm";
-import KYCForm from "../../components/screens/basic-details.tsx/KYCForm";
-import FarmerDetailsForm from "../../components/screens/basic-details.tsx/FarmerDetailsForm";
-// import FarmDetailsForm from "../../components/screens/basic-details.tsx/FarmDetailsForm";
-// import CropsAvailabilityForm from "../../components/screens/basic-details.tsx/CropsListForm";
-
+// component imports
 import BasicDetailsLayout from "../../components/layout/BasicDetailsLayout";
 import StepTabs, { steps } from "../../components/ui/StepsTab";
-import { basicDetailsSchema } from "../../utils/yupValidation";
 import {
+  BasicDetailsForm,
   CertificatesForm,
   CropsAvailabilityForm,
   CropsListForm,
+  FarmerDetailsForm,
+  KYCForm,
   LandAndCropDetailsForm,
   OthersForm,
 } from "../../components/screens";
-
-// global form type
-export interface CompleteFormData {
-  fullName: string;
-  mobileNumber: string;
-  location: string;
-  referralCode?: string;
-
-  //kyc details
-  aadhaar?: string;
-  pan?: string;
-  govtSchemeProof?: File | null;
-  farmerID?: File | null;
-
-  // 🌱 Farmer Details
-  preferredLanguage?: string;
-  dob?: string;
-  farmExperience?: number;
-  gender?: string;
-  email?: string;
-  isFPO?: boolean;
-  fpoName?: string;
-  registrationNumber?: string;
-
-  // Farm Details
-  cropList?: string[];
-  farmingType?: string;
-  landSize?: number;
-
-  //additional Details
-  certificates?: File[] | null;
-}
+import { schemaMap } from "../../utils/yupValidation";
 
 const BasicDetails: React.FC = () => {
   const [activeTab, setActiveTab] = useState("basic");
@@ -63,12 +29,6 @@ const BasicDetails: React.FC = () => {
     setActiveSubTab(activeStep?.subTabs?.[0]?.id || "");
   }, [activeTab]);
 
-  // 🎯 Universal form
-  const methods = useForm<CompleteFormData>({
-    resolver: yupResolver(basicDetailsSchema),
-    mode: "onBlur",
-  });
-
   const currentIndex = steps.findIndex((s) => s.id === activeTab);
 
   const onNext = () => {
@@ -80,10 +40,62 @@ const BasicDetails: React.FC = () => {
     if (currentIndex > 0) setActiveTab(steps[currentIndex - 1].id);
   };
 
-  const onSave = methods.handleSubmit(
-    (data) => console.log("SUCCESS:", data),
-    (err) => console.log("ERRORS:", err)
-  );
+  // get current yup schema
+
+  const getCurrentSchema = () => {
+    const step = schemaMap[activeTab];
+
+    if (!step) return null;
+
+    return step[activeSubTab] || step.default || null;
+  };
+
+  const currentSchema = getCurrentSchema();
+
+  const methods = useForm({
+    resolver: currentSchema ? yupResolver(currentSchema) : undefined,
+    mode: "onBlur",
+    defaultValues: {
+      crops: [],
+      certificates: [],
+    },
+  });
+
+  const handleSubmitCurrent = methods.handleSubmit(async (data) => {
+    console.log("Validated Data:", data);
+
+    // build payload per tab
+    if (activeTab === "basic") {
+      const payload = {
+        fullName: data.fullName,
+        mobileNumber: data.mobileNumber,
+        location: data.location,
+        referralCode: data.referralCode,
+      };
+      console.log("Basic Payload:", payload);
+    }
+
+    if (activeTab === "kyc") {
+      console.log("KYC data:", data);
+    }
+
+    if (activeTab === "farmer") {
+      console.log("Farmer details:", data);
+    }
+
+    if (activeTab === "farm") {
+      console.log("Farm details:", data);
+    }
+
+    if (activeTab === "crop") {
+      console.log("Crop info:", data.crops);
+    }
+    if (activeTab === "additional") {
+      if (activeSubTab === "certificates") {
+        console.log("Certificates:", data);
+      }
+    }
+  });
 
   // 🎯 Render forms by tab + subtab
   const renderForm = () => {
@@ -121,10 +133,10 @@ const BasicDetails: React.FC = () => {
       <BasicDetailsLayout
         onPrev={onPrev}
         onNext={onNext}
-        onSave={onSave}
+        onSubmit={handleSubmitCurrent}
         isFirstStep={currentIndex === 0}
       >
-        <div className="w-full py-4">
+        <div className="w-full h-full py-4">
           <StepTabs
             activeTab={activeTab}
             onTabChange={setActiveTab}
@@ -132,7 +144,7 @@ const BasicDetails: React.FC = () => {
           />
 
           {/* SubTabs */}
-          <div className="flex gap-3 border-b my-6">
+          <div className="flex gap-3 border-b my-6 ">
             {activeStep?.subTabs?.map((st) => (
               <button
                 key={st.id}
@@ -148,7 +160,7 @@ const BasicDetails: React.FC = () => {
             ))}
           </div>
 
-          {renderForm()}
+          <div className="overflow-y-scrollpb-40 "> {renderForm()}</div>
         </div>
       </BasicDetailsLayout>
     </FormProvider>
