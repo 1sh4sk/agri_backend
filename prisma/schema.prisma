@@ -1,0 +1,283 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("SUPABASE_DB_URL")
+}
+
+
+// =====================================================
+// AUTH TABLE
+// =====================================================
+model Auth {
+  id               String    @id @default(uuid())
+  userName         String
+  email            String?   @unique
+  phoneNumber      String    @unique
+  role             String
+  language         String
+  
+  emailVerified    Boolean   @default(false)
+  emailOtp         String?
+  emailOtpExpiry   DateTime?
+  
+  phoneVerified    Boolean   @default(true)
+  
+  loginOtp         String?
+  loginOtpExpiry   DateTime?
+  
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  farmer             Farmer?
+  individual         Individual?
+  business           Business?
+  professionals      Professionals?
+  governmentOfficials GovernmentOfficials?
+
+  @@index([email])
+  @@index([phoneNumber])
+  @@map("auth")
+}
+
+// =====================================================
+// TEMPORARY AUTH TABLE
+// =====================================================
+model TempAuth {
+  id           String    @id @default(uuid())
+  userName     String
+  email        String?   @unique
+  phoneNumber  String    @unique
+  role         String
+  language     String
+  smsOtp       String
+  verified     Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  expiresAt    DateTime
+
+  @@index([phoneNumber])
+  @@index([expiresAt])
+  @@map("temp_auth")
+}
+
+// =====================================================
+// FARMER (FARMER) PROFILE
+// =====================================================
+model Farmer {
+  id          String    @id @default(uuid())
+  authId      String    @unique
+  
+  // Basic Details
+  userName    String
+  fullName    String?
+  email       String?
+  phoneNumber String
+  language    String
+  location    String?
+  referralCode String?
+  
+  // Profile Pictures
+  profilePicture String?
+  coverPicture   String?
+  
+  // KYC Documents
+  aadhaarFrontUrl     String?
+  aadhaarBackUrl      String?
+  panCardUrl          String?
+  govtSchemeProofUrl  String?
+  farmerIdProofUrl    String?
+  
+  // KYC Verification Status
+  aadhaarVerified Boolean @default(false)
+  panVerified     Boolean @default(false)
+  kycStatus       String  @default("Pending") // Pending, Verified, Rejected
+  
+  // Farmer Details
+  preferredLanguage       String?
+  dob                     DateTime?
+  farmExperience          Int?
+  gender                  String?
+  isFpoMember             Boolean   @default(false)
+  fpoName                 String?
+  fpoRegistrationNumber   String?
+  
+  // Farm Details
+  landSize     Float?
+  farmingType  String?
+  
+  // Selling Preferences
+  sellingPreference String?
+  preferredMarket   String?
+  
+  // Profile Completion
+  profileCompletionPercentage Int     @default(0)
+  isProfileVerified           Boolean @default(false)
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  auth        Auth      @relation(fields: [authId], references: [id], onDelete: Cascade)
+  
+  // Relations
+  crops        Crop[]
+  certificates Certificate[]
+  awards       Award[]
+  media        Media[]
+
+  @@index([authId])
+  @@index([profileCompletionPercentage])
+  @@map("farmers")
+}
+
+// =====================================================
+// CROPS TABLE
+// =====================================================
+model Crop {
+  id                  String   @id @default(uuid())
+  farmerId            String
+  cropImage           String?
+  cropName            String
+  variety             String
+  availabilityStatus  String   // Available, Not Available
+  quantity            Float?
+  harvestPeriod       String
+  expectedPrice       Float
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  farmer Farmer @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+
+  @@index([farmerId])
+  @@map("crops")
+}
+
+// =====================================================
+// CERTIFICATES TABLE
+// =====================================================
+model Certificate {
+  id        String   @id @default(uuid())
+  farmerId  String
+  title     String
+  fileUrl   String
+  fileSize  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  farmer Farmer @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+
+  @@index([farmerId])
+  @@map("certificates")
+}
+
+// =====================================================
+// AWARDS TABLE
+// =====================================================
+model Award {
+  id        String   @id @default(uuid())
+  farmerId  String
+  title     String
+  fileUrl   String
+  fileSize  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  farmer Farmer @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+
+  @@index([farmerId])
+  @@map("awards")
+}
+
+// =====================================================
+// MEDIA TABLE
+// =====================================================
+model Media {
+  id        String   @id @default(uuid())
+  farmerId  String
+  mediaType String   // Image, Video
+  fileUrl   String
+  fileSize  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  farmer Farmer @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+
+  @@index([farmerId])
+  @@map("media")
+}
+
+// =====================================================
+// OTHER ROLE TABLES (Keep existing)
+// =====================================================
+
+model Individual {
+  id          String    @id @default(uuid())
+  authId      String    @unique
+  userName    String
+  email       String?
+  phoneNumber String
+  language    String
+  dateOfBirth DateTime?
+  address     String?
+  interests   String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  auth        Auth      @relation(fields: [authId], references: [id], onDelete: Cascade)
+  @@map("individuals")
+}
+
+model Business {
+  id              String    @id @default(uuid())
+  authId          String    @unique
+  userName        String
+  email           String?
+  phoneNumber     String
+  language        String
+  businessName    String?
+  businessType    String?
+  registrationNo  String?
+  address         String?
+  website         String?
+  employeeCount   Int?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  auth            Auth      @relation(fields: [authId], references: [id], onDelete: Cascade)
+  @@map("businesses")
+}
+
+model Professionals {
+  id              String    @id @default(uuid())
+  authId          String    @unique
+  userName        String
+  email           String?
+  phoneNumber     String
+  language        String
+  profession      String?
+  qualification   String?
+  experience      Int?
+  specialization  String[]
+  licenseNumber   String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  auth            Auth      @relation(fields: [authId], references: [id], onDelete: Cascade)
+  @@map("professionals")
+}
+
+model GovernmentOfficials {
+  id           String    @id @default(uuid())
+  authId       String    @unique
+  userName     String
+  email        String?
+  phoneNumber  String
+  language     String
+  department   String?
+  designation  String?
+  employeeId   String?
+  office       String?
+  jurisdiction String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  auth         Auth      @relation(fields: [authId], references: [id], onDelete: Cascade)
+  @@map("government_officials")
+}
