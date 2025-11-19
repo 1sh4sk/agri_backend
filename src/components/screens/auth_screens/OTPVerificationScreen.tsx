@@ -1,43 +1,60 @@
 import { useState, useRef, KeyboardEvent, ClipboardEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '../ui/Button';
-import { AuthLayout } from '../layout/AuthLayout';
-import { createOtpSchema, OTPFormData } from '../validation/otpSchema';
-import otpImg from '../../assets/login.png';
+import { Button } from '../../ui/Button';
+import { AuthLayout } from '../../layout/AuthLayout';
+import { createOtpSchema, OTPFormData } from '../../../utils/auth_validation/otpSchema';
+import otpImg from '../../../assets/login.png';
 import { useTranslation } from 'react-i18next';
-
+import { useAuth } from '../../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 interface OTPVerificationScreenProps {
   contactInfo?: string;
-  onSuccess: () => void;
-  onBack: () => void;
+  // onSuccess: () => void;
+  // onBack: () => void;
   onResend?: () => void;
   onGuestContinue?: () => void;
 }
 
 export const OTPVerificationScreen = ({ 
   contactInfo,
-  onSuccess, 
-  onBack,
+  // onSuccess, 
+  // onBack,
   onResend,
-  onGuestContinue
+  onGuestContinue,
 }: OTPVerificationScreenProps) => {
   const { t } = useTranslation();
+  const { 
+    verifyOTP, 
+    verifyLoginOTP, 
+    resendLoginOTP,
+    resendRegistrationOTP,
+    identifier, 
+    isNewUser,
+    isLoginFlow
+  } = useAuth();
+  const navigate = useNavigate();
+  
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [otpError, setOtpError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  
+  console.log("is login flow :", isLoginFlow);
+  console.log("identifier :", identifier);
+  console.log("is new user :", isNewUser);
 
   const otpSchema = createOtpSchema(t);
 
   const {
     handleSubmit,
     setValue,
-    formState: { isSubmitting },
   } = useForm<OTPFormData>({
     resolver: yupResolver(otpSchema),
   });
 
-  const handleChange = (index: number, value: string) => {
+  const handleChange = (index: number, value: string): void => {
     if (value.length > 1) {
       value = value.slice(-1);
     }
@@ -56,13 +73,13 @@ export const OTPVerificationScreen = ({
     }
   };
 
-  const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
-  const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
+  const handlePaste = (e: ClipboardEvent<HTMLInputElement>): void => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text/plain').slice(0, 6);
 
@@ -78,7 +95,7 @@ export const OTPVerificationScreen = ({
     inputRefs.current[nextIndex]?.focus();
   };
 
-  const onSubmit = async (data: OTPFormData) => {
+  const onSubmit = async (): Promise<void> => {
     const otpValue = otp.join('');
     
     if (otpValue.length !== 6) {
@@ -87,29 +104,90 @@ export const OTPVerificationScreen = ({
     }
 
     try {
+      setIsSubmitting(true);
+      setOtpError('');
+
+      // Validate OTP format first
       await otpSchema.validate({ otp: otpValue });
-      onSuccess();
-    } catch (error: any) {
-      setOtpError(error.message || 'Invalid OTP');
+
+      console.log('Verifying OTP for identifier:', identifier);
+      console.log('Is login flow:', isLoginFlow);
+      console.log('Is new user:', isNewUser);
+
+      // Determine which API to call based on the flow
+      if (isLoginFlow) {
+        // Login OTP verification - uses identifier and otp
+        console.log('Calling verifyLoginOTP API');
+        await verifyLoginOTP(otpValue);
+        console.log('Login OTP verified successfully');
+        navigate('/basic-details');
+      } else {
+        // Registration OTP verification - uses phoneNumber and otp
+        console.log('Calling verifyOTP API');
+        await verifyOTP(otpValue);
+        console.log('Registration OTP verified successfully');
+        navigate('/basic-details');
+      }
+
+      // onSuccess();
+    } catch (error: unknown) {
+      console.error('OTP verification error:', error);
+      setOtpError(error instanceof Error ? error.message : 'Invalid OTP');
+    } finally {
+      setIsSubmitting(false);
+      
     }
   };
 
-  const handleResend = () => {
-    setOtp(['', '', '', '', '', '']);
-    setOtpError('');
-    setValue('otp', '');
-    inputRefs.current[0]?.focus();
-    onResend?.();
+  const handleResend = async (): Promise<void> => {
+    try {
+      setResendLoading(true);
+      setOtpError('');
+      
+      if (!identifier) {
+        setOtpError('No identifier found');
+        return;
+      }
+
+      console.log('Resending OTP to:', identifier);
+      console.log('Is login flow:', isLoginFlow);
+      
+      // Use the appropriate resend OTP method based on the flow
+      if (isLoginFlow) {
+        await resendLoginOTP();
+      } else {
+        await resendRegistrationOTP();
+      }
+      
+      // Reset OTP fields
+      setOtp(['', '', '', '', '', '']);
+      setValue('otp', '');
+      inputRefs.current[0]?.focus();
+      
+      // Show success message (you might want to use a toast here)
+      console.log('OTP resent successfully');
+      
+      onResend?.();
+    } catch (error: unknown) {
+      console.error('Resend OTP error:', error);
+      setOtpError(error instanceof Error ? error.message : 'Failed to resend OTP');
+    } finally {
+      setResendLoading(false);
+    }
   };
 
-  const handleGuestContinue = () => {
+  const handleGuestContinue = (): void => {
     if (onGuestContinue) {
       onGuestContinue();
     } else {
       console.log('Continuing as guest');
+      navigate('/dashboard');
     }
   };
 
+  const handleBack =() =>{
+    navigate('/login')
+  }
   return (
     <AuthLayout 
       imageUrl={otpImg} 
@@ -120,10 +198,12 @@ export const OTPVerificationScreen = ({
         <div className="text-center relative">
           <button
             type="button"
-            onClick={onBack}
+            onClick={handleBack}
             className="absolute top-0 left-0 text-gray-600 hover:text-gray-900"
           >
-            <svg className="w-1 h-61" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            
+        
+            <svg className="w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
@@ -168,14 +248,15 @@ export const OTPVerificationScreen = ({
             )}
           </div>
 
-          <div className="text-center text-sm text-gray-600">
+        <div className="text-center text-sm text-gray-600">
             {t('notReceived')}{' '}
             <button 
               type="button" 
               onClick={handleResend}
-              className="text-primary font-semibold underline hover:text-primary-600"
+              disabled={resendLoading}
+              className="text-primary font-semibold underline hover:text-primary-600 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {t('resend')}
+              {resendLoading ? t('resending') : t('resend')}
             </button>
           </div>
 

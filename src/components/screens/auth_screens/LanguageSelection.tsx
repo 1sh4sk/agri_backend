@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { RadioCard } from '../ui/RadioCard';
-import { Button } from '../ui/Button';
+import { RadioCard } from '../../ui/RadioCard';
+import { Button } from '../../ui/Button';
 import { useTranslation } from 'react-i18next';
-import { LanguageCode } from '../../i18n';
-import { LogoWithContainer } from '../ui/Logo';
+import { LanguageCode } from '../../../i18n';
+import { LogoWithContainer } from '../../ui/Logo';
+import { useNavigate } from 'react-router-dom';
 
 const languages = [
   { code: 'hi' as LanguageCode, name: 'हिंदी', subtitle: 'source quality products, expand your networkand grow your agricultural business.' },
@@ -18,20 +19,24 @@ const languages = [
   { code: 'en' as LanguageCode, name: 'English', subtitle: 'source quality products, expand your networkand grow your agricultural business.' },
 ];
 
-interface LanguageSelectionProps {
-  onComplete: () => void;
-}
+// interface LanguageSelectionProps {
+//   onComplete: () => void;
+// }
 
-export const LanguageSelection = ({ onComplete }: LanguageSelectionProps) => {
+export const LanguageSelection = (
+  // { onComplete }: LanguageSelectionProps
+) => {
   const { i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageCode | null>(null);
+  const navigate = useNavigate()
 
   const handleContinue = () => {
     if (selectedLanguage) {
       i18n.changeLanguage(selectedLanguage);
       localStorage.setItem('i18nextLng', selectedLanguage);
       localStorage.setItem('language', selectedLanguage);
-      onComplete();
+      // onComplete();
+      navigate('/role-selection')
     }
   };
 

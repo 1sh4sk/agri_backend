@@ -4,6 +4,7 @@ import { LanguageSelector } from "../ui/LanguageSelector";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ProfileCard } from "../screens";
 import { ProgressBar } from "../ui";
+import { useNavigate } from "react-router-dom";
 
 interface BasicDetailsLayoutProps {
   children: React.ReactNode;
@@ -21,6 +22,11 @@ const BasicDetailsLayout: React.FC<BasicDetailsLayoutProps> = ({
   onSubmit,
   isFirstStep = false,
 }) => {
+  const naviagte = useNavigate();
+  const handleSave = () => {
+    naviagte("/dashboard");
+    // onSave()
+  };
   return (
     <div className="w-screen max-h-screen bg-background flex p-6 gap-6 relative overflow-hidden">
       {/* Left section */}

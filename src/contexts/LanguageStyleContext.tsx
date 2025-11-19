@@ -34,12 +34,12 @@ export const LanguageStyleProvider = ({ children }: { children: ReactNode }) => 
                        isIndicLanguage ? 'text-base' : 'text-sm';
   
   // Input field specific sizes
-  const inputFontSize = isTamil ? 'text-[12px]' : 
-                       isMalayalam ? 'text-[15px]' : 
+  const inputFontSize = isTamil ? 'text-[8px]' : 
+                       isMalayalam ? 'text-[8px]' : 
                        isIndicLanguage ? 'text-base' : 'text-sm';
   
-  const labelFontSize = isTamil ? 'text-[15px]' : 
-                       isMalayalam ? 'text-[15px]' : 
+  const labelFontSize = isTamil ? 'text-[8px]' : 
+                       isMalayalam ? 'text-[8px]' : 
                        isIndicLanguage ? 'text-base' : 'text-sm';
 
   return (

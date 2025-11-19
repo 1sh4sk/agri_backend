@@ -105,12 +105,13 @@
 
 import { useState } from 'react';
 import { User, Briefcase, Users, Building2 } from 'lucide-react';
-import { Button } from '../ui/Button';
-import { RadioCard } from '../ui/RadioCard';
-import { AuthLayout } from '../layout/AuthLayout';
+import { Button } from '../../ui/Button';
+import { RadioCard } from '../../ui/RadioCard';
+import { AuthLayout } from '../../layout/AuthLayout';
 import { useTranslation } from 'react-i18next';
-import { UserRole, USER_ROLES } from '../../constants/userRoles';
-import { useAuth } from '../../contexts/AuthContext';
+import { UserRole, USER_ROLES } from '../../../constants/userRoles';
+import { useAuth } from '../../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const roles = [
   {
@@ -139,11 +140,14 @@ const roles = [
   },
 ];
 
-interface RoleSelectionScreenProps {
-  onNext: () => void;
-}
 
-export const RoleSelectionScreen = ({ onNext }: RoleSelectionScreenProps) => {
+// interface RoleSelectionScreenProps {
+//   // onNext: () => void;
+// }
+
+export const RoleSelectionScreen = (
+  // { onNext }: RoleSelectionScreenProps
+) => {
   const { setUserRole } = useAuth();
   const { t } = useTranslation();
   const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
@@ -151,12 +155,14 @@ export const RoleSelectionScreen = ({ onNext }: RoleSelectionScreenProps) => {
   const handleRoleSelect = (role: string | null) => {
     setSelectedRole(role as UserRole);
   };
+  const navigate = useNavigate()
 
   const handleNext = () => {
     if (selectedRole) {
       localStorage.setItem('selectedRole', selectedRole);
       setUserRole(selectedRole);
-      onNext();
+      navigate('/signup')
+      // onNext();
     }
   };
 
