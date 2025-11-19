@@ -10,7 +10,7 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 interface OTPVerificationScreenProps {
   contactInfo?: string;
-  onSuccess: () => void;
+  // onSuccess: () => void;
   // onBack: () => void;
   onResend?: () => void;
   onGuestContinue?: () => void;
@@ -18,7 +18,7 @@ interface OTPVerificationScreenProps {
 
 export const OTPVerificationScreen = ({ 
   contactInfo,
-  onSuccess, 
+  // onSuccess, 
   // onBack,
   onResend,
   onGuestContinue,
@@ -129,7 +129,7 @@ export const OTPVerificationScreen = ({
         navigate('/basic-details');
       }
 
-      onSuccess();
+      // onSuccess();
     } catch (error: unknown) {
       console.error('OTP verification error:', error);
       setOtpError(error instanceof Error ? error.message : 'Invalid OTP');

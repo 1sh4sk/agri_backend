@@ -370,11 +370,11 @@ function App() {
                 path="/login"
                 element={
                   <PublicRoute>
-                      <BasicDetails />
-                      <FormerDashboard /> 
+                      {/* <BasicDetails />
+                      <FormerDashboard />  */}
                     <LoginScreen 
                       // onSignup={() => window.location.href = '/'}
-                      onSuccess={() => window.location.href = '/otp-verification'}
+                      // onSuccess={}
                     />
                   </PublicRoute>
                 }
@@ -383,7 +383,9 @@ function App() {
                 path="/language-selection"
                 element={
                   <PublicRoute>
-                    <LanguageSelection onComplete={() => window.location.href = '/role-selection'} />
+                    <LanguageSelection 
+                    // onComplete={() => window.location.href = '/role-selection'} 
+                    />
                   </PublicRoute>
                 }
               />
@@ -402,8 +404,8 @@ function App() {
                 element={
                   <PublicRoute>
                     <SignUpScreen 
-                      onLogin={() => window.location.href = '/login'}
-                      onSuccess={() => window.location.href = '/otp-verification'}
+                      // onLogin={() => window.location.href = '/login'}
+                      // onSuccess={() => window.location.href = '/otp-verification'}
                     />
                   </PublicRoute>
                 }
@@ -416,7 +418,7 @@ function App() {
   element={
     <PublicRoute>
       <OTPVerificationScreen 
-        onSuccess={() => console.log('Registration OTP verified')}
+        // onSuccess={() => console.log('Registration OTP verified')}
       //  onBack={() => window.history.back()}
         // isLoginFlow={false} // Registration flow
       />
@@ -430,7 +432,7 @@ function App() {
   element={
     <PublicRoute>
       <OTPVerificationScreen 
-        onSuccess={() => console.log('Login OTP verified')}
+        // onSuccess={() => console.log('Login OTP verified')}
       // onBack={() => window.history.back()}
         // isLoginFlow={true} // Login flow
       />

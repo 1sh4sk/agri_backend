@@ -13,20 +13,21 @@ import { useAuth } from '../../../contexts/AuthContext';
 
 interface LoginScreenProps {
   // onSignup: () => void;
-  onSuccess: (data: LoginFormData) => void;
+  //  onSuccess: (data: LoginFormData) => void;
   onGuestContinue?: () => void;
 }
 
 export const LoginScreen = ({ 
   // onSignup,
-   onSuccess, onGuestContinue }: LoginScreenProps) => {
+  //  onSuccess,
+    onGuestContinue }: LoginScreenProps) => {
   const { t } = useTranslation();
   
   const { login: loginApi, setIdentifier } = useAuth();
   const navigate = useNavigate();
-  const loginSchema = React.useMemo(() => createLoginSchema(t), [t]);
+  // const loginSchema = React.useMemo(() => createLoginSchema(t), [t]);
 
-    
+ const loginSchema = createLoginSchema(t)   
 
   const {
     register,
@@ -63,7 +64,9 @@ const onSubmit = async (data: LoginFormData): Promise<void> => {
     setIdentifier(identifier);
     
     // Call the success callback
-    onSuccess(data);
+    // onSuccess(data); 
+
+    navigate('/otp-verification')
     
     // Navigate to login OTP verification
     navigate('/login-otp-verification');

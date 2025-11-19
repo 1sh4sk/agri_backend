@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import  { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '../../ui/Button';
@@ -10,22 +10,26 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 interface SignUpScreenProps {
-  onLogin: () => void;
-  onSuccess: (data: SignupFormData) => void;
+  // onLogin: () => void;
+  // onSuccess: (data: SignupFormData) => void;
   onGuestContinue?: () => void;
 }
 
-export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScreenProps) => {
+export const SignUpScreen = ({ 
+  // onLogin, onSuccess, 
+  onGuestContinue }: SignUpScreenProps) => {
   const { t } = useTranslation();
   const [countryCode, setCountryCode] = useState('+91');
   const { signup, role, language, setIdentifier } = useAuth();
   const navigate = useNavigate();
-  const signupSchema = createSignupSchema(t);
-
+  const signupSchema = useMemo(() => {
+    return createSignupSchema(t);
+  }, [t]); // Add i18n.language as dependency
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    // watch,
   } = useForm<SignupFormData>({
     resolver: yupResolver(signupSchema),
     defaultValues: {
@@ -34,6 +38,7 @@ export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScre
       mobile: '',
       countryCode: '+91',
     },
+    mode: 'onChange'
   });
 
   // Function to convert language code to lowercase for API
@@ -56,7 +61,7 @@ export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScre
   // Function to convert role for API
   const getRoleForAPI = (roleCode: string): string => {
     const roleMap: { [key: string]: string } = {
-      'farmer': 'former',
+      'farmer': 'farmer',
       'business': 'business',
       'professional': 'individual', 
       'government': 'government'
@@ -91,7 +96,8 @@ export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScre
       setIdentifier(signupData.phoneNumber);
       
       // Call the success callback
-      onSuccess(data);
+      // onSuccess(data);
+      // navigate('')
       navigate('/otp-verification');
     } catch (error: unknown) {
       console.error('Signup error:', error instanceof Error ? error.message : 'Unknown error');
@@ -107,13 +113,12 @@ export const SignUpScreen = ({ onLogin, onSuccess, onGuestContinue }: SignUpScre
   };
 
   const handleLoginClick = (): void => {
-    if (onLogin) {
-      onLogin();
-    } else {
+   
       navigate('/login');
-    }
+    // }
   };
 
+    // const watchedValues = watch();
 
   return (
     <AuthLayout 
