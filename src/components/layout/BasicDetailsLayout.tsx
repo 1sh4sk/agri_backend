@@ -22,11 +22,6 @@ const BasicDetailsLayout: React.FC<BasicDetailsLayoutProps> = ({
   onSubmit,
   isFirstStep = false,
 }) => {
-  const naviagte = useNavigate();
-  const handleSave = () => {
-    naviagte("/dashboard");
-    // onSave()
-  };
   return (
     <div className="w-screen max-h-screen bg-background flex p-6 gap-6 relative overflow-hidden">
       {/* Left section */}
