@@ -5,23 +5,23 @@ const index_1 = require("../index");
 class Repository {
     async findFarmerById(farmerId) {
         return index_1.prisma.farmer.findUnique({
-            where: { authId: farmerId }
+            where: { authId: farmerId },
         });
     }
     async findFarmerByAuthId(authId) {
         return index_1.prisma.farmer.findUnique({
-            where: { authId }
+            where: { authId },
         });
     }
     async updateBasicDetails(farmerId, data) {
         return index_1.prisma.farmer.update({
             where: { authId: farmerId },
             data: {
-                fullName: data.fullName,
+                userName: data.userName,
                 location: data.location,
                 referralCode: data.referralCode,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async updateKYCDocuments(farmerId, data) {
@@ -34,8 +34,8 @@ class Repository {
                 govtSchemeProofUrl: data.govtSchemeProofUrl,
                 farmerIdProofUrl: data.farmerIdProofUrl,
                 kycStatus: data.kycStatus,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async updateAadhaarVerification(farmerId, verified) {
@@ -43,8 +43,8 @@ class Repository {
             where: { authId: farmerId },
             data: {
                 aadhaarVerified: verified,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async updatePANVerification(farmerId, verified) {
@@ -52,8 +52,8 @@ class Repository {
             where: { authId: farmerId },
             data: {
                 panVerified: verified,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async updateKYCStatus(farmerId, status) {
@@ -61,15 +61,15 @@ class Repository {
             where: { authId: farmerId },
             data: {
                 kycStatus: status,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async updateFarmerDetails(farmerId, data) {
         return index_1.prisma.farmer.update({
             where: { authId: farmerId },
             data: {
-                fullName: data.fullName,
+                userName: data.userName,
                 preferredLanguage: data.preferredLanguage,
                 dob: data.dob ? new Date(data.dob) : undefined,
                 farmExperience: data.farmExperience,
@@ -80,8 +80,8 @@ class Repository {
                 fpoRegistrationNumber: data.fpoRegistrationNumber,
                 location: data.location,
                 referralCode: data.referralCode,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async updateFarmDetails(farmerId, data) {
@@ -90,8 +90,8 @@ class Repository {
             data: {
                 landSize: data.landSize,
                 farmingType: data.farmingType,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async updateSellingPreferences(farmerId, data) {
@@ -100,8 +100,8 @@ class Repository {
             data: {
                 sellingPreference: data.sellingPreference,
                 preferredMarket: data.preferredMarket,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async updateProfilePicture(farmerId, url) {
@@ -109,8 +109,8 @@ class Repository {
             where: { authId: farmerId },
             data: {
                 profilePicture: url,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async updateCoverPicture(farmerId, url) {
@@ -118,8 +118,8 @@ class Repository {
             where: { authId: farmerId },
             data: {
                 coverPicture: url,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async updateProfileCompletion(farmerId, percentage, isVerified) {
@@ -128,33 +128,45 @@ class Repository {
             data: {
                 profileCompletionPercentage: percentage,
                 isProfileVerified: isVerified,
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         });
     }
     async createCrop(farmerId, data) {
+        const farmerExists = await index_1.prisma.farmer.findUnique({
+            where: { authId: farmerId },
+        });
+        if (!farmerExists) {
+            throw new Error("Farmer not found");
+        }
         return index_1.prisma.crop.create({
             data: {
-                farmerId,
+                farmerId: farmerExists.id,
                 cropImage: data.cropImage,
                 cropName: data.cropName,
                 variety: data.variety,
                 availabilityStatus: data.availabilityStatus,
                 quantity: data.quantity,
                 harvestPeriod: data.harvestPeriod,
-                expectedPrice: data.expectedPrice
-            }
+                expectedPrice: data.expectedPrice,
+            },
         });
     }
     async findCropsByFarmerId(farmerId) {
+        const farmerExists = await index_1.prisma.farmer.findUnique({
+            where: { authId: farmerId },
+        });
+        if (!farmerExists) {
+            throw new Error("Farmer not found");
+        }
         return index_1.prisma.crop.findMany({
-            where: { farmerId },
-            orderBy: { createdAt: 'desc' }
+            where: { farmerId: farmerExists.id },
+            orderBy: { createdAt: "desc" },
         });
     }
     async findCropById(cropId) {
         return index_1.prisma.crop.findUnique({
-            where: { id: cropId }
+            where: { id: cropId },
         });
     }
     async updateCrop(cropId, data) {
@@ -165,37 +177,43 @@ class Repository {
                 cropName: data.cropName,
                 variety: data.variety,
                 availabilityStatus: data.availabilityStatus,
-                quantity: data.quantity,
+                quantity: data.quantity ? Number(data.quantity) : null,
                 harvestPeriod: data.harvestPeriod,
-                expectedPrice: data.expectedPrice,
-                updatedAt: new Date()
-            }
+                expectedPrice: data.expectedPrice ? Number(data.expectedPrice) : 0,
+                updatedAt: new Date(),
+            },
         });
     }
     async deleteCrop(cropId) {
         return index_1.prisma.crop.delete({
-            where: { id: cropId }
+            where: { id: cropId },
         });
     }
     async createCertificate(farmerId, data) {
+        const farmerExists = await index_1.prisma.farmer.findUnique({
+            where: { authId: farmerId },
+        });
+        if (!farmerExists) {
+            throw new Error("Farmer not found");
+        }
         return index_1.prisma.certificate.create({
             data: {
-                farmerId,
+                farmerId: farmerExists.id,
                 title: data.title,
                 fileUrl: data.fileUrl,
-                fileSize: data.fileSize
-            }
+                fileSize: data.fileSize,
+            },
         });
     }
     async findCertificatesByFarmerId(farmerId) {
         return index_1.prisma.certificate.findMany({
             where: { farmerId },
-            orderBy: { createdAt: 'desc' }
+            orderBy: { createdAt: "desc" },
         });
     }
     async deleteCertificate(certificateId) {
         return index_1.prisma.certificate.delete({
-            where: { id: certificateId }
+            where: { id: certificateId },
         });
     }
     async createAward(farmerId, data) {
@@ -204,19 +222,19 @@ class Repository {
                 farmerId,
                 title: data.title,
                 fileUrl: data.fileUrl,
-                fileSize: data.fileSize
-            }
+                fileSize: data.fileSize,
+            },
         });
     }
     async findAwardsByFarmerId(farmerId) {
         return index_1.prisma.award.findMany({
             where: { farmerId },
-            orderBy: { createdAt: 'desc' }
+            orderBy: { createdAt: "desc" },
         });
     }
     async deleteAward(awardId) {
         return index_1.prisma.award.delete({
-            where: { id: awardId }
+            where: { id: awardId },
         });
     }
     async createMedia(farmerId, data) {
@@ -225,19 +243,19 @@ class Repository {
                 farmerId,
                 mediaType: data.mediaType,
                 fileUrl: data.fileUrl,
-                fileSize: data.fileSize
-            }
+                fileSize: data.fileSize,
+            },
         });
     }
     async findMediaByFarmerId(farmerId) {
         return index_1.prisma.media.findMany({
             where: { farmerId },
-            orderBy: { createdAt: 'desc' }
+            orderBy: { createdAt: "desc" },
         });
     }
     async deleteMedia(mediaId) {
         return index_1.prisma.media.delete({
-            where: { id: mediaId }
+            where: { id: mediaId },
         });
     }
 }

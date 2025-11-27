@@ -8,9 +8,6 @@ datasource db {
 }
 
 
-// =====================================================
-// AUTH TABLE
-// =====================================================
 model Auth {
   id               String    @id @default(uuid())
   userName         String
@@ -42,9 +39,6 @@ model Auth {
   @@map("auth")
 }
 
-// =====================================================
-// TEMPORARY AUTH TABLE
-// =====================================================
 model TempAuth {
   id           String    @id @default(uuid())
   userName     String
@@ -62,16 +56,12 @@ model TempAuth {
   @@map("temp_auth")
 }
 
-// =====================================================
-// FARMER (FARMER) PROFILE
-// =====================================================
 model Farmer {
   id          String    @id @default(uuid())
   authId      String    @unique
   
   // Basic Details
   userName    String
-  fullName    String?
   email       String?
   phoneNumber String
   language    String
@@ -131,9 +121,6 @@ model Farmer {
   @@map("farmers")
 }
 
-// =====================================================
-// CROPS TABLE
-// =====================================================
 model Crop {
   id                  String   @id @default(uuid())
   farmerId            String
@@ -153,9 +140,6 @@ model Crop {
   @@map("crops")
 }
 
-// =====================================================
-// CERTIFICATES TABLE
-// =====================================================
 model Certificate {
   id        String   @id @default(uuid())
   farmerId  String
@@ -171,9 +155,6 @@ model Certificate {
   @@map("certificates")
 }
 
-// =====================================================
-// AWARDS TABLE
-// =====================================================
 model Award {
   id        String   @id @default(uuid())
   farmerId  String
@@ -189,9 +170,6 @@ model Award {
   @@map("awards")
 }
 
-// =====================================================
-// MEDIA TABLE
-// =====================================================
 model Media {
   id        String   @id @default(uuid())
   farmerId  String
@@ -206,10 +184,6 @@ model Media {
   @@index([farmerId])
   @@map("media")
 }
-
-// =====================================================
-// OTHER ROLE TABLES (Keep existing)
-// =====================================================
 
 model Individual {
   id          String    @id @default(uuid())

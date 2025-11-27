@@ -19,7 +19,7 @@ class Service {
                 awards: 5,
                 sellingPreferences: 5,
                 media: 5,
-            }
+            },
         };
         this.repository = new repository_1.Repository();
     }
@@ -33,41 +33,43 @@ class Service {
         const pendingSections = [];
         const mandatorySections = [
             {
-                sectionName: 'basicDetails',
-                isCompleted: !!(profile.fullName && profile.phoneNumber && profile.location),
+                sectionName: "basicDetails",
+                isCompleted: !!(profile.userName &&
+                    profile.phoneNumber &&
+                    profile.location),
                 isMandatory: true,
-                percentage: 15
+                percentage: 15,
             },
             {
-                sectionName: 'kycVerification',
-                isCompleted: profile.kycStatus === 'Verified',
+                sectionName: "kycVerification",
+                isCompleted: profile.kycStatus === "Verified",
                 isMandatory: true,
-                percentage: 15
+                percentage: 15,
             },
             {
-                sectionName: 'farmerDetails',
+                sectionName: "farmerDetails",
                 isCompleted: !!(profile.preferredLanguage &&
                     profile.dob &&
                     profile.farmExperience !== null &&
                     profile.gender),
                 isMandatory: true,
-                percentage: 10
+                percentage: 10,
             },
             {
-                sectionName: 'farmDetails',
+                sectionName: "farmDetails",
                 isCompleted: !!(profile.landSize && profile.farmingType),
                 isMandatory: true,
-                percentage: 15
-            }
+                percentage: 15,
+            },
         ];
         const crops = await this.repository.findCropsByFarmerId(farmerId);
         mandatorySections.push({
-            sectionName: 'cropsAvailability',
+            sectionName: "cropsAvailability",
             isCompleted: crops.length > 0,
             isMandatory: true,
-            percentage: 10
+            percentage: 10,
         });
-        mandatorySections.forEach(section => {
+        mandatorySections.forEach((section) => {
             if (section.isCompleted) {
                 completionPercentage += section.percentage;
                 completedSections.push(section.sectionName);
@@ -81,13 +83,13 @@ class Service {
         const media = await this.repository.findMediaByFarmerId(farmerId);
         const optionalSectionsCompleted = [];
         if (certificates.length > 0)
-            optionalSectionsCompleted.push('certificates');
+            optionalSectionsCompleted.push("certificates");
         if (awards.length > 0)
-            optionalSectionsCompleted.push('awards');
+            optionalSectionsCompleted.push("awards");
         if (profile.sellingPreference)
-            optionalSectionsCompleted.push('sellingPreferences');
+            optionalSectionsCompleted.push("sellingPreferences");
         if (media.length > 0)
-            optionalSectionsCompleted.push('media');
+            optionalSectionsCompleted.push("media");
         const optionalPercentage = Math.min(optionalSectionsCompleted.length * 5, 10);
         completionPercentage += optionalPercentage;
         completedSections.push(...optionalSectionsCompleted);
@@ -97,18 +99,19 @@ class Service {
             profileCompletionPercentage: completionPercentage,
             isProfileVerified,
             completedSections,
-            pendingSections
+            pendingSections,
         };
     }
     async updateBasicDetails(farmerId, payload) {
+        console.log("test", farmerId);
         const profile = await this.repository.findFarmerByAuthId(farmerId);
         if (!profile) {
             throw new customError_1.CustomError("Farmer profile not found", 404);
         }
         const updated = await this.repository.updateBasicDetails(farmerId, {
-            fullName: payload.fullName,
+            userName: payload.userName,
             location: payload.location,
-            referralCode: payload.referralCode
+            referralCode: payload.referralCode,
         });
         const completion = await this.calculateProfileCompletion(farmerId);
         return {
@@ -116,33 +119,33 @@ class Service {
             message: "Basic details updated successfully",
             data: {
                 profile: updated,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async verifyAadhaarMock(aadhaarNumber) {
         console.log(`🔍 MOCK AADHAAR VERIFICATION: ${aadhaarNumber}`);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         return {
             success: true,
             verified: true,
             data: {
                 name: "John Doe",
                 dob: "1990-01-01",
-                address: "Sample Address, City, State"
-            }
+                address: "Sample Address, City, State",
+            },
         };
     }
     async verifyPANMock(panNumber) {
         console.log(`🔍 MOCK PAN VERIFICATION: ${panNumber}`);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         return {
             success: true,
             verified: true,
             data: {
                 name: "John Doe",
-                panNumber: panNumber
-            }
+                panNumber: panNumber,
+            },
         };
     }
     async uploadKYCDocuments(farmerId, files) {
@@ -152,26 +155,26 @@ class Service {
         }
         const uploadedUrls = {};
         if (files.aadhaarFront && files.aadhaarFront.length > 0) {
-            const result = await (0, s3Client_1.uploadFile)(files.aadhaarFront[0], '/kyc/aadhaar/');
+            const result = await (0, s3Client_1.uploadFile)(files.aadhaarFront[0], "/kyc/aadhaar/");
             uploadedUrls.aadhaarFrontUrl = result.url;
         }
         if (files.aadhaarBack && files.aadhaarBack.length > 0) {
-            const result = await (0, s3Client_1.uploadFile)(files.aadhaarBack[0], '/kyc/aadhaar/');
+            const result = await (0, s3Client_1.uploadFile)(files.aadhaarBack[0], "/kyc/aadhaar/");
             uploadedUrls.aadhaarBackUrl = result.url;
         }
         if (files.panCard && files.panCard.length > 0) {
-            const result = await (0, s3Client_1.uploadFile)(files.panCard[0], '/kyc/pan/');
+            const result = await (0, s3Client_1.uploadFile)(files.panCard[0], "/kyc/pan/");
             uploadedUrls.panCardUrl = result.url;
         }
         if (files.govtSchemeProof && files.govtSchemeProof.length > 0) {
-            const result = await (0, s3Client_1.uploadFile)(files.govtSchemeProof[0], '/kyc/govt/');
+            const result = await (0, s3Client_1.uploadFile)(files.govtSchemeProof[0], "/kyc/govt/");
             uploadedUrls.govtSchemeProofUrl = result.url;
         }
         if (files.farmerIdProof && files.farmerIdProof.length > 0) {
-            const result = await (0, s3Client_1.uploadFile)(files.farmerIdProof[0], '/kyc/farmer-id/');
+            const result = await (0, s3Client_1.uploadFile)(files.farmerIdProof[0], "/kyc/farmer-id/");
             uploadedUrls.farmerIdProofUrl = result.url;
         }
-        uploadedUrls.kycStatus = 'Pending';
+        uploadedUrls.kycStatus = "Pending";
         const updated = await this.repository.updateKYCDocuments(farmerId, uploadedUrls);
         const completion = await this.calculateProfileCompletion(farmerId);
         return {
@@ -179,8 +182,8 @@ class Service {
             message: "KYC documents uploaded successfully. Verification in progress.",
             data: {
                 profile: updated,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async verifyAadhaar(farmerId, payload) {
@@ -198,7 +201,7 @@ class Service {
         return {
             success: true,
             message: "Aadhaar verified successfully",
-            data: verification.data
+            data: verification.data,
         };
     }
     async verifyPAN(farmerId, payload) {
@@ -213,7 +216,7 @@ class Service {
         if (verification.verified) {
             await this.repository.updatePANVerification(farmerId, true);
             if (profile.aadhaarVerified) {
-                await this.repository.updateKYCStatus(farmerId, 'Verified');
+                await this.repository.updateKYCStatus(farmerId, "Verified");
             }
         }
         const completion = await this.calculateProfileCompletion(farmerId);
@@ -222,8 +225,8 @@ class Service {
             message: "PAN verified successfully",
             data: {
                 ...verification.data,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async updateFarmerDetails(farmerId, payload) {
@@ -237,7 +240,7 @@ class Service {
             }
         }
         const updated = await this.repository.updateFarmerDetails(farmerId, {
-            fullName: payload.fullName,
+            userName: payload.userName,
             location: payload.location,
             preferredLanguage: payload.preferredLanguage,
             dob: payload.dob,
@@ -247,7 +250,7 @@ class Service {
             isFpoMember: payload.isFpoMember,
             fpoName: payload.fpoName,
             fpoRegistrationNumber: payload.fpoRegistrationNumber,
-            referralCode: payload.referralCode
+            referralCode: payload.referralCode,
         });
         const completion = await this.calculateProfileCompletion(farmerId);
         return {
@@ -255,8 +258,8 @@ class Service {
             message: "Farmer details updated successfully",
             data: {
                 profile: updated,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async updateFarmDetails(farmerId, payload) {
@@ -271,8 +274,8 @@ class Service {
             message: "Farm details updated successfully",
             data: {
                 profile: updated,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async addCrop(farmerId, payload, files) {
@@ -280,17 +283,17 @@ class Service {
         if (!profile) {
             throw new customError_1.CustomError("Farmer profile not found", 404);
         }
-        if (payload.availabilityStatus === 'Available' && !payload.quantity) {
+        if (payload.availabilityStatus === "Available" && !payload.quantity) {
             throw new customError_1.CustomError("Quantity is required when crop is available", 400);
         }
         let cropImageUrl;
         if (files?.cropImage && files.cropImage.length > 0) {
-            const result = await (0, s3Client_1.uploadFile)(files.cropImage[0], '/crops/');
+            const result = await (0, s3Client_1.uploadFile)(files.cropImage[0], "/crops/");
             cropImageUrl = result.url;
         }
         const crop = await this.repository.createCrop(farmerId, {
             ...payload,
-            cropImage: cropImageUrl
+            cropImage: cropImageUrl,
         });
         const completion = await this.calculateProfileCompletion(farmerId);
         return {
@@ -298,8 +301,8 @@ class Service {
             message: "Crop added successfully",
             data: {
                 crop,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async getCrops(farmerId) {
@@ -307,35 +310,35 @@ class Service {
         return {
             success: true,
             data: {
-                crops
-            }
+                crops,
+            },
         };
     }
     async updateCrop(farmerId, cropId, payload, files) {
         const crop = await this.repository.findCropById(cropId);
-        if (!crop || crop.farmerId !== farmerId) {
+        if (!crop) {
             throw new customError_1.CustomError("Crop not found", 404);
         }
         let cropImageUrl;
         if (files?.cropImage && files.cropImage.length > 0) {
-            const result = await (0, s3Client_1.uploadFile)(files.cropImage[0], '/crops/');
+            const result = await (0, s3Client_1.uploadFile)(files.cropImage[0], "/crops/");
             cropImageUrl = result.url;
         }
         const updated = await this.repository.updateCrop(cropId, {
             ...payload,
-            cropImage: cropImageUrl || crop.cropImage
+            cropImage: cropImageUrl || crop.cropImage,
         });
         return {
             success: true,
             message: "Crop updated successfully",
             data: {
-                crop: updated
-            }
+                crop: updated,
+            },
         };
     }
     async deleteCrop(farmerId, cropId) {
         const crop = await this.repository.findCropById(cropId);
-        if (!crop || crop.farmerId !== farmerId) {
+        if (!crop) {
             throw new customError_1.CustomError("Crop not found", 404);
         }
         await this.repository.deleteCrop(cropId);
@@ -343,7 +346,7 @@ class Service {
         return {
             success: true,
             message: "Crop deleted successfully",
-            data: completion
+            data: completion,
         };
     }
     async uploadCertificates(farmerId, files) {
@@ -351,11 +354,12 @@ class Service {
         if (!profile) {
             throw new customError_1.CustomError("Farmer profile not found", 404);
         }
-        const uploadResults = await (0, s3Client_1.uploadMultipleFiles)(files, '/certificates/');
-        const certificates = await Promise.all(uploadResults.map(result => this.repository.createCertificate(farmerId, {
+        const uploadResults = await (0, s3Client_1.uploadMultipleFiles)(files, "/certificates/");
+        const certificates = await Promise.all(uploadResults.map((result) => this.repository.createCertificate(farmerId, {
             title: result.originalName,
             fileUrl: result.url,
-            fileSize: files.find(f => f.originalname === result.originalName)?.size || 0
+            fileSize: files.find((f) => f.originalname === result.originalName)?.size ||
+                0,
         })));
         const completion = await this.calculateProfileCompletion(farmerId);
         return {
@@ -363,8 +367,8 @@ class Service {
             message: "Certificates uploaded successfully",
             data: {
                 certificates,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async uploadAwards(farmerId, files) {
@@ -372,11 +376,12 @@ class Service {
         if (!profile) {
             throw new customError_1.CustomError("Farmer profile not found", 404);
         }
-        const uploadResults = await (0, s3Client_1.uploadMultipleFiles)(files, '/awards/');
-        const awards = await Promise.all(uploadResults.map(result => this.repository.createAward(farmerId, {
+        const uploadResults = await (0, s3Client_1.uploadMultipleFiles)(files, "/awards/");
+        const awards = await Promise.all(uploadResults.map((result) => this.repository.createAward(farmerId, {
             title: result.originalName,
             fileUrl: result.url,
-            fileSize: files.find(f => f.originalname === result.originalName)?.size || 0
+            fileSize: files.find((f) => f.originalname === result.originalName)?.size ||
+                0,
         })));
         const completion = await this.calculateProfileCompletion(farmerId);
         return {
@@ -384,8 +389,8 @@ class Service {
             message: "Awards uploaded successfully",
             data: {
                 awards,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async uploadMedia(farmerId, files) {
@@ -393,14 +398,16 @@ class Service {
         if (!profile) {
             throw new customError_1.CustomError("Farmer profile not found", 404);
         }
-        const uploadResults = await (0, s3Client_1.uploadMultipleFiles)(files, '/media/');
-        const media = await Promise.all(uploadResults.map(result => {
-            const file = files.find(f => f.originalname === result.originalName);
-            const mediaType = file?.mimetype.startsWith('video/') ? 'Video' : 'Image';
+        const uploadResults = await (0, s3Client_1.uploadMultipleFiles)(files, "/media/");
+        const media = await Promise.all(uploadResults.map((result) => {
+            const file = files.find((f) => f.originalname === result.originalName);
+            const mediaType = file?.mimetype.startsWith("video/")
+                ? "Video"
+                : "Image";
             return this.repository.createMedia(farmerId, {
                 mediaType,
                 fileUrl: result.url,
-                fileSize: file?.size || 0
+                fileSize: file?.size || 0,
             });
         }));
         const completion = await this.calculateProfileCompletion(farmerId);
@@ -409,8 +416,8 @@ class Service {
             message: "Media uploaded successfully",
             data: {
                 media,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async uploadProfilePicture(farmerId, file) {
@@ -418,15 +425,15 @@ class Service {
         if (!profile) {
             throw new customError_1.CustomError("Farmer profile not found", 404);
         }
-        const result = await (0, s3Client_1.uploadFile)(file, '/profile/');
+        const result = await (0, s3Client_1.uploadFile)(file, "/profile/");
         const updated = await this.repository.updateProfilePicture(farmerId, result.url);
         return {
             success: true,
             message: "Profile picture uploaded successfully",
             data: {
                 profilePicture: result.url,
-                profile: updated
-            }
+                profile: updated,
+            },
         };
     }
     async uploadCoverPicture(farmerId, file) {
@@ -434,15 +441,15 @@ class Service {
         if (!profile) {
             throw new customError_1.CustomError("Farmer profile not found", 404);
         }
-        const result = await (0, s3Client_1.uploadFile)(file, '/cover/');
+        const result = await (0, s3Client_1.uploadFile)(file, "/cover/");
         const updated = await this.repository.updateCoverPicture(farmerId, result.url);
         return {
             success: true,
             message: "Cover picture uploaded successfully",
             data: {
                 coverPicture: result.url,
-                profile: updated
-            }
+                profile: updated,
+            },
         };
     }
     async updateSellingPreferences(farmerId, payload) {
@@ -457,8 +464,8 @@ class Service {
             message: "Selling preferences updated successfully",
             data: {
                 profile: updated,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async getCompleteProfile(farmerId) {
@@ -479,15 +486,15 @@ class Service {
                 certificates,
                 awards,
                 media,
-                ...completion
-            }
+                ...completion,
+            },
         };
     }
     async getProfileCompletionStatus(farmerId) {
         const completion = await this.calculateProfileCompletion(farmerId);
         return {
             success: true,
-            data: completion
+            data: completion,
         };
     }
 }
